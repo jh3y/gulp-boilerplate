@@ -1,0 +1,14 @@
+{
+  "name": "gulp-boilerplate-v2",
+  "version": "0.1.0",
+  "description": "a starting point for using gulp",
+  "devDependencies": {
+    "gulp": "~3.5.6",
+    "gulp-jade": "~0.4.2",
+    "gulp-coffee": "~1.4.1",
+    "gulp-less": "^1.2.3",
+    "gulp-connect": "^2.0.5",
+    "gulp-plumber": "^0.6.0",
+    "gulp-watch": "^0.5.4"
+  }
+}
