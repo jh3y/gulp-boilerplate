@@ -10,6 +10,9 @@
 
 The aim is to get you up and running with something in _gulp_ quickly
 
+## Known Issues
+Something is wrong with the layout and the comments and a couple other sections are incorrectly displayed
+
 ## Usage
 #### First
 Make sure you have `NPM` and `Gulp-Cli`
