@@ -1,4 +1,5 @@
-# Gulp Boilerplate V2 (With SASS) ![Build Status][Build Success!!!] ![Built with GulpJS](http://b.repl.ca/v1/Built_with-GulpJS-orange.png)
+# Gulp Boilerplate V2 (With SASS)
+![Build Status][Build Success!!!] ![Built with GulpJS](http://b.repl.ca/v1/Built_with-GulpJS-orange.png)
 > A revised simple gulp boilerplate that gives you:
 
 * Static server with automatic live reload
@@ -40,6 +41,7 @@ Add all of this project-specific stuff:
 6. start hacking away with super livereload goodness.
 
 Modified from @jh3y by @kyleking
+
 Github icons built with [Buckler](http://b.repl.ca)
 
 [Build Success!!!]: http://b.repl.ca/v1/Build-Success%21%21%21-brightgreen.png
