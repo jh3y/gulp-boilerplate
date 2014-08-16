@@ -11,7 +11,9 @@
 The aim is to get you up and running with something in _gulp_ quickly
 
 ## Known Issues
-Something is wrong with the layout and the comments and a couple other sections are incorrectly displayed
+* Something is wrong with the layout and the comments and a couple other sections are incorrectly displayed
+* The site isn't working: https://help.github.com/articles/creating-project-pages-manually
+* The link should be [here](http://kyleking.github.io/gulp-boilerplate-v2/)
 
 ## Usage
 #### First
