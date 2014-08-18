@@ -25,7 +25,11 @@ Make sure you have `NPM` and `Gulp-Cli`
     * Open the package
         - For help click [here](http://blog.nodeknockout.com/post/65463770933/how-to-install-node-js-and-npm)
 
-2. Then install [git local package management](http://git-scm.com/downloads)
+2. Install GulpJS with:
+
+        npm install --global gulp
+
+3. Then install [git local package management](http://git-scm.com/downloads)
 
 #### Afterward
 Add all of this project-specific stuff:
