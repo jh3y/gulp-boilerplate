@@ -1,4 +1,4 @@
-# Gulp Boilerplate V2 (With SASS)
+# Gulp Boilerplate V2 (With SASS and Bourbon)
 ![Build Status][Build Success!!!] ![Built with GulpJS](http://b.repl.ca/v1/Built_with-GulpJS-orange.png)
 > Forked from [Gulp Boilerplate V2](https://github.com/jh3y/gulp-boilerplate-v2)
 
