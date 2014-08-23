@@ -7,7 +7,7 @@ A revised simple gulp boilerplate that gives you:
 * Static server with automatic live reload
 * Pre-processor language support:
     - Jade compilation
-    - SASS compilation
+    - SASS compilation (And [Bourbon](http://bourbon.io) + Neat and Bitters already!)
     - Coffeescript compilation
 
 The aim is to get you up and running with something in _gulp_ quickly
