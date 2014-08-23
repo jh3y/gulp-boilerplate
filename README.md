@@ -36,23 +36,23 @@ Make sure you have `NPM` and `Gulp-Cli`
 #### Afterward
 Add all of this project-specific stuff:
 
-3. clone the repo
+1. clone the repo
 
         git clone https://github.com/KyleKing/gulp-boilerplate-v2.git
         cd gulp-boilerplate-v2/
 
-4. install dependencies
+2. install dependencies
 
         npm install
 
-5. start gulp
+3. start gulp
 
         gulp
 
-6. start hacking away with super livereload goodness.
+4. start hacking away with super livereload goodness.
 
+###### Attribution
 Modified from @jh3y by @kyleking
-
 Github icons built with [Buckler](http://b.repl.ca)
 
 [Build Success!!!]: http://b.repl.ca/v1/Build-Success%21%21%21-brightgreen.png
