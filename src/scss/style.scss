@@ -12,7 +12,7 @@
 @import 'base/base';
 
 // Bourbon Neat Setup File
-@import '_custom/layout';
+@import '_custom/_layout';
 
 /* ------------------------------------------------------------
                Custom stylization
@@ -20,18 +20,18 @@
 
 // Bourbon Refills Demo:
 // Navigation1 Black Header
-@import '_custom/navigation1';
+@import '_custom/_navigation1';
 // hero_unit Block
-@import '_custom/hero_unit';
+@import '_custom/_hero_unit';
 // IconBulletPoints
-@import '_custom/IconBulletPoints';
+@import '_custom/_IconBulletPoints';
 // device
-@import '_custom/device';
+@import '_custom/_device';
 // Side Image
-@import '_custom/sideImage';
+@import '_custom/_sideImage';
 // Cards
-@import '_custom/cards';
+@import '_custom/_cards';
 // browser
-@import '_custom/browser';
+@import '_custom/_browser';
 // browser
-@import '_custom/comments';
+@import '_custom/_comments';

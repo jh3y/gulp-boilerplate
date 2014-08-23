@@ -11,7 +11,7 @@
 
 
 /* In your newly created _grid-settings.scss, import neat-helpers if you are planning to use new-breakpoint(), then define your new variables: */
-@import 'neat/neat-helpers'; // or 'neat-helpers' when in Rails
+@import '../neat/_neat-helpers'; // or 'neat-helpers' when in Rails
 
 // Change the grid settings
 $column: 90px;
@@ -69,3 +69,7 @@ div.container {
 /* By setting \$visual-grid to true, you can display the base grid in the background (default) or as an overlay. You can even change the color and opacity of the grid-lines by overriding the default settings as detailed in the section below. Keep in mind that on Webkit, rounding errors in the fluid grid might result in the overlay being few pixels off.
 
 The visual grid reflects the changes applied to the grid via the new-breakpoint() mixin, as long as the media contexts are defined before importing Neat. */
+
+
+
+$base-line-height: 90px;
