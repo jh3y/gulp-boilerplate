@@ -1,6 +1,8 @@
 # Gulp Boilerplate V2 (With SASS)
 ![Build Status][Build Success!!!] ![Built with GulpJS](http://b.repl.ca/v1/Built_with-GulpJS-orange.png)
-> A revised simple gulp boilerplate that gives you:
+> Forked from [Gulp Boilerplate V2](https://github.com/jh3y/gulp-boilerplate-v2)
+
+A revised simple gulp boilerplate that gives you:
 
 * Static server with automatic live reload
 * Pre-processor language support:
