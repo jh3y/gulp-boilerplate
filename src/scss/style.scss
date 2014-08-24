@@ -6,13 +6,41 @@
                 https://github.com/thoughtbot/bitters
 ------------------------------------------------------------*/
 // Import files for Bourbon
-@import 'Bourbon/bourbon';
+@import 'bourbon/bourbon';
 @import "base/grid-settings";
 @import "neat/neat";
 @import 'base/base';
 
 // Bourbon Neat Setup File
-@import '_custom/_layout';
+// @import '_custom/_layout';
+
+/* ------------------------------------------------------------
+               Startup Sass File Suggested by this site:
+               http://devin-clark.com/getting-started-with-bourbon/
+------------------------------------------------------------*/
+// Variables
+// $black: #000;
+
+// @import "bourbon/bourbon";
+
+// @import "neat/neat-helpers";
+// @import "bitters/grid-settings";
+
+// @import "bitters/variables";
+
+// // Bitters Variable Overrides
+// $base-font-family: "Open Sans", $sans-serif;
+// $header-font-family: "Noto Sans", $base-font-family;
+
+// @import "bitters/extends/base";
+// @import "bitters/mixins/base";
+// @import "bitters/typography";
+// @import "bitters/forms";
+// @import "bitters/tables";
+// @import "bitters/lists";
+// @import "bitters/flashes";
+
+// @import "neat/neat";
 
 /* ------------------------------------------------------------
                Custom stylization
