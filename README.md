@@ -1,31 +1,66 @@
-#gulp boilerplate v2
+# Gulp Boilerplate V2 (With SASS and Bourbon)
+![Build Status][Build Success!!!] ![Built with GulpJS](http://b.repl.ca/v1/Built_with-GulpJS-orange.png)
+> Forked from [Gulp Boilerplate V2](https://github.com/jh3y/gulp-boilerplate-v2)
 
-a revised simple gulp boilerplate that gives you
+A revised simple gulp boilerplate that gives you:
 
-* static server with automatic live reload
-* jade compilation
-* less compilation
-* coffeescript compilation
+* Static server with automatic live reload
+* Pre-processor language support:
+    - Jade compilation
+    - SASS compilation (And [Bourbon](http://bourbon.io) + Neat and Bitters already!)
+    - Coffeescript compilation
 
 The aim is to get you up and running with something in _gulp_ quickly
 
-##usage
-as a prerequisite it's assumed you have `npm` installed and the `gulp-cli`.
+## Known Issues
+* Something is wrong with the layout and the comments and a couple other sections are incorrectly displayed
+* The site isn't working: https://help.github.com/articles/creating-project-pages-manually
+* The link should be [here](http://kyleking.github.io/gulp-boilerplate-v2/)
+
+## Usage
+#### First
+Make sure you have `NPM` and `Gulp-Cli`
+
+1. Get NPM and NodeJS
+    * Go to: [nodejs.org](http://nodejs.org)
+    * Click install
+    * Open the package
+        - For help click [here](http://blog.nodeknockout.com/post/65463770933/how-to-install-node-js-and-npm)
+
+2. Install GulpJS with:
+
+        npm install --global gulp
+
+3. Then install [git local package management](http://git-scm.com/downloads)
+
+#### Afterward
+Add all of this project-specific stuff:
 
 1. clone the repo
 
-		git clone https://github.com/jh3y/gulp-boilerplate-v2.git
+        git clone https://github.com/KyleKing/gulp-boilerplate-v2.git
+        cd gulp-boilerplate-v2/
 
 2. install dependencies
 
-		npm install
+        npm install
 
 3. start gulp
 
-		gulp
+        gulp
 
-4. start hacking away with super fast livereload goodness.
+4. start hacking away with super livereload goodness.
 
-Any problems or questions, feel free to post an issue or tweet me, @_jh3y!
+###### Attribution
+Modified from @jh3y by @kyleking
+Github icons built with [Buckler](http://b.repl.ca)
 
-@jh3y 2014
+[Build Success!!!]: http://b.repl.ca/v1/Build-Success%21%21%21-brightgreen.png
+[Build Passing]: http://b.repl.ca/v1/Build-Passing-lightgrey.png
+[Build Failing]: http://b.repl.ca/v1/Build-Failing-red.png
+
+[Questionable]: http://b.repl.ca/v1/Quality-Questionable-lightgrey.png
+
+[Out of Date]: http://b.repl.ca/v1/devDependencies-Out_of%20Date-red.png
+
+[On]: http://b.repl.ca/v1/Move-On-red.png

@@ -1,0 +1,75 @@
+/* CSS for the content of page. I am giving top and bottom padding of 80px to make sure the header and footer do not overlap the content.*/
+#content_container {
+  margin:0 auto;
+  overflow:auto;
+  padding:50px 0;
+  max-width:960px;
+}
+// Read more: http://techtalk.virendrachandak.com/sticky-header-and-footer-using-css/#ixzz3AHgIeW3t
+// Follow us: @virendrachandak on Twitter
+
+
+
+/* In your newly created _grid-settings.scss, import neat-helpers if you are planning to use new-breakpoint(), then define your new variables: */
+@import '../neat/_neat-helpers'; // or 'neat-helpers' when in Rails
+
+// Change the grid settings
+$column: 90px;
+$gutter: 30px;
+$grid-columns: 10;
+$max-width: em(1088);
+
+// Define your breakpoints
+$tablet: new-breakpoint(max-width 768px 8);
+$mobile: new-breakpoint(max-width 480px 4);
+
+/* Next, include the outer-container mixin in the topmost container (to which the max-width setting will be applied): */
+div.container {
+  @include outer-container;
+}
+
+/* Then use span-columns on any element to specify the number of columns it should span: */
+div.element {
+  @include span-columns(6);
+}
+
+/* If the element's parent isn't the top-most container, you need to add the number of columns of the parent element to keep the right proportions: */
+div.container {
+  @include outer-container;
+
+  div.parent-element {
+    @include span-columns(8);
+
+    div.element {
+      @include span-columns(6 of 8);
+    }
+  }
+}
+
+/* To make your layout responsive, use the media() mixin to modify both the grid and the layout: */
+.my-class {
+  @include media($mobile) { // As defined in _grid-settings.scss
+    @include span-columns(2);
+  }
+}
+
+// Compiled CSS
+@media screen and (max-width: 480px) {
+  .my-class {
+    display: block;
+    float: left;
+    margin-right: 7.42297%;
+    width: 46.28851%; // 2 columns of the total 4 in this media context
+  }
+  .my-class:last-child {
+    margin-right: 0;
+  }
+}
+
+/* By setting \$visual-grid to true, you can display the base grid in the background (default) or as an overlay. You can even change the color and opacity of the grid-lines by overriding the default settings as detailed in the section below. Keep in mind that on Webkit, rounding errors in the fluid grid might result in the overlay being few pixels off.
+
+The visual grid reflects the changes applied to the grid via the new-breakpoint() mixin, as long as the media contexts are defined before importing Neat. */
+
+
+
+$base-line-height: 90px;

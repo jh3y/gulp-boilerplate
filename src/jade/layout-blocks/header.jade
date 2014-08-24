@@ -1,5 +1,42 @@
-header.center
-	h1 gulp boilerplate v2
-	a(href="https://twitter.com/share", class="twitter-share-button", data-url="https://github.com/jh3y/gulp-boilerplate-v2", data-text="Gulp Boilerplate v2", data-hashtags="gulp, boilerplate, frontenddev") Tweet
-		script.
-			!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+//- Navigation1
+header.navigation
+    .navigation-wrapper
+        a.logo(href='javascript:void(0)')
+          img(src='https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/placeholder_logo_1.png', alt='')
+        a#js-mobile-menu.navigation-menu-button(href='') MENU
+        .nav
+          ul#navigation-menu
+            li.nav-link
+              a(href='javascript:void(0)') Products
+            li.nav-link
+              a(href='javascript:void(0)') About Us
+            li.nav-link
+              a(href='javascript:void(0)') Contact
+            li.nav-link.more
+              a(href='javascript:void(0)') More
+              ul.submenu
+                li
+                  a(href='javascript:void(0)') Submenu Item
+                li
+                  a(href='javascript:void(0)') Another Item
+                li.more
+                  a(href='javascript:void(0)') Item with submenu
+                  ul.submenu
+                    li
+                      a(href='javascript:void(0)') Sub-submenu Item
+                    li
+                      a(href='javascript:void(0)') Another Item
+                li.more
+                  a(href='javascript:void(0)') Another submenu
+                  ul.submenu
+                    li
+                      a(href='javascript:void(0)') Sub-submenu
+                    li
+                      a(href='javascript:void(0)') An Item
+        .navigation-tools
+          .search-bar
+            .search-and-submit
+              input(type='search', placeholder='Enter Search')
+              button(type='submit')
+                img(src='https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/search-icon.png', alt='')
+          a.sign-up(href='javascript:void(0)') Sign Up
