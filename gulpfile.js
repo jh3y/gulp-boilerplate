@@ -3,91 +3,87 @@ var gulp = require('gulp'),
 	jade = require('gulp-jade'),
 	connect = require('gulp-connect'),
 	plumber = require('gulp-plumber'),
-	watch = require('gulp-watch'),
 	less = require('gulp-less'),
+	concat = require('gulp-concat'),
+	uglify = require('gulp-uglify'),
+	rename = require('gulp-rename'),
+	minify = require('gulp-minify-css'),
+	env = 'out/',
 	sources = {
-		coffee: "src/coffee/**/*.coffee",
-		templates: ["src/jade/**/*.jade", "!src/jade/*.jade"],
-		docs: "src/jade/*.jade",
-		less: "src/less/**/*.less",
-		style: "src/less/style.less",
-		overwatch: "out/**/*.*"
+		coffee: 'src/coffee/**/*.coffee',
+		docs: 'src/jade/*.jade',
+		jade: 'src/jade/**/*.jade',
+		less: 'src/less/**/*.less',
+		overwatch: 'out/**/*.{html,js,css}'
 	},
 	destinations = {
-		js: "out/js/",
-		docs: "out/",
-		css: "out/css/"
+		js: env + 'js/',
+		html: env,
+		css: env + 'css/'
 	};
 /*SERVER TASK*/
+gulp.task('server:reload', function(event) {
+	return gulp.src(sources.overwatch)
+		.pipe(connect.reload());
+});
 gulp.task('serve', function(event) {
 	connect.server({
-		root: destinations.docs,
+		root: destinations.html,
 		port: 1987,
 		livereload: true
 	});
 	// sets up a livereload that watches for any changes in the root
-	watch({glob: sources.overwatch})
-		.pipe(connect.reload());
+	gulp.watch(sources.overwatch, ['server:reload']);
 });
 /*COFFEE TASK*/
-gulp.task('coffee', function(event) {
+gulp.task('coffee:compile', function(event) {
 	return gulp.src(sources.coffee)
 		.pipe(plumber())
+		.pipe(concat('app.coffee'))
 		.pipe(coffee())
+		.pipe(gulp.dest(destinations.js))
+		.pipe(uglify())
+		.pipe(rename({
+			suffix: '.min'
+		}))
 		.pipe(gulp.dest(destinations.js));
 });
 /*COFFEE WATCH TASK FOR DEVELOPMENT*/
 gulp.task('coffee:watch', function(event) {
-	watch({glob: sources.coffee})
-		.pipe(plumber())
-		.pipe(coffee())
-		.pipe(gulp.dest(destinations.js));
+	gulp.watch(sources.coffee, ['coffee:compile']);
 });
 /*LESS TASK*/
-gulp.task('less', function(event) {
-	return gulp.src(sources.style)
+gulp.task('less:compile', function(event) {
+	return gulp.src(sources.less)
 		.pipe(plumber())
-		.pipe(less({
-			compress: true
+		.pipe(concat('style.less'))
+		.pipe(less())
+		.pipe(gulp.dest(destinations.css))
+		.pipe(minify())
+		.pipe(rename({
+			suffix: '.min'
 		}))
 		.pipe(gulp.dest(destinations.css));
 });
 /*LESS WATCH TASK FOR DEVELOPMENT*/
 gulp.task('less:watch', function(event) {
-	watch({glob: sources.less}, function(files) {
-		gulp.src(sources.style)
-			.pipe(plumber())
-			.pipe(less({
-				compress: true
-			}))
-			.pipe(gulp.dest(destinations.css));
-	});
+	gulp.watch(sources.less, ['less:compile']);
 });
+
+
 /*JADE TASK*/
-gulp.task('jade', function(event) {
+gulp.task('jade:compile', function(event) {
 	return gulp.src(sources.docs)
 		.pipe(plumber())
-		.pipe(jade({
-			pretty: true
-		}))
-		.pipe(gulp.dest(destinations.docs));
+		.pipe(jade())
+		.pipe(gulp.dest(destinations.html));
 });
 /*JADE WATCH TASK FOR DEVELOPMENT*/
 gulp.task('jade:watch', function(event){
-	watch({glob: sources.templates}, function(files) {
-		gulp.src(sources.docs)
-			.pipe(plumber())
-			.pipe(jade({
-				pretty: true
-			}))
-			.pipe(gulp.dest(destinations.docs));
-	});
-	watch({glob: sources.docs})
-		.pipe(plumber())
-		.pipe(jade({
-			pretty: true
-		}))
-		.pipe(gulp.dest(destinations.docs));
+	gulp.watch(sources.jade, ['jade:compile']);
 });
+
+gulp.task('build:complete', ['jade:compile', 'less:compile', 'coffee:compile']);
+
 /*DEFAULT TASK*/
-gulp.task('default', ["serve", "jade:watch", "less:watch", "coffee:watch"]);
+gulp.task('default', ['build:complete', "serve", "jade:watch", "less:watch", "coffee:watch"]);
