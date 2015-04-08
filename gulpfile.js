@@ -1,6 +1,7 @@
-var gulp = require('gulp'),
-  gConfig = require('./gulp-config'),
-  plugins = require('gulp-load-plugins')({
+var gulp      = require('gulp'),
+  gConfig     = require('./gulp-config'),
+  browserSync = require('browser-sync'),
+  plugins     = require('gulp-load-plugins')({
     rename: {
       'gulp-gh-pages'  : 'deploy',
       'gulp-util'      : 'gUtil',
@@ -15,22 +16,28 @@ var gulp = require('gulp'),
 
 // isDist ? destinations.dist: destinations.js
 /* Use this magic to adhere to passed in flags. Means you can pass in flags*/
-
-/*SERVER TASK*/
-gulp.task('server:reload', function(event) {
-  return gulp.src(sources.overwatch)
-    .pipe(plugins.connect.reload());
-});
+/*
+  serve; creates local static livereload server using browser-sync.
+*/
 gulp.task('serve', function(event) {
-  plugins.connect.server({
-    root: destinations.html,
-    port: 1987,
-    livereload: true
+  browserSync({
+    port   : 1987,
+    server : {
+      baseDir: gConfig.paths.base
+    }
   });
-  // sets up a livereload that watches for any changes in the root
-  gulp.watch(sources.overwatch, ['server:reload']);
+  return gulp.watch(sources.overwatch).on('change', browserSync.reload);
 });
-/*COFFEE TASK*/
+
+
+
+/*
+  coffee:compile/coffee:watch
+
+  watch for changes to CoffeeScript files then compile app JavaScript file
+  from source, concatenating and uglifying content and publishing output based on env flag.
+*/
+
 gulp.task('coffee:compile', function(event) {
   return gulp.src(sources.coffee)
     .pipe(plugins.plumber())
@@ -43,11 +50,16 @@ gulp.task('coffee:compile', function(event) {
     }))
     .pipe(gulp.dest(destinations.js));
 });
-/*COFFEE WATCH TASK FOR DEVELOPMENT*/
 gulp.task('coffee:watch', function(event) {
   gulp.watch(sources.coffee, ['coffee:compile']);
 });
-/*LESS TASK*/
+
+/*
+  stylus:compile/stylus:watch
+
+  watch for changes to stylus files then compile stylesheet from source
+  auto prefixing content and generating output based on env flag.
+*/
 gulp.task('stylus:compile', function(event) {
   return gulp.src(sources.stylus)
     .pipe(plugins.plumber())
@@ -60,20 +72,23 @@ gulp.task('stylus:compile', function(event) {
     }))
     .pipe(gulp.dest(destinations.css));
 });
-/*LESS WATCH TASK FOR DEVELOPMENT*/
 gulp.task('stylus:watch', function(event) {
   gulp.watch(sources.stylus, ['stylus:compile']);
 });
 
 
-/*JADE TASK*/
+/*
+  jade:compile/jade:watch
+
+  watch for all jade file changes then compile
+  page document files.
+*/
 gulp.task('jade:compile', function(event) {
   return gulp.src(sources.docs)
     .pipe(plugins.plumber())
     .pipe(plugins.jade())
     .pipe(gulp.dest(destinations.html));
 });
-/*JADE WATCH TASK FOR DEVELOPMENT*/
 gulp.task('jade:watch', function(event){
   gulp.watch(sources.jade, ['jade:compile']);
 });

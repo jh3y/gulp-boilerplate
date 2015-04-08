@@ -1,5 +1,6 @@
 colorPalette = {
   red   : #E74C3C
+  blue  : blue
   green : #2ECC71
   purple: #8E44AD
   lilac : #AC92CE
