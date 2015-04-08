@@ -1,10 +1,10 @@
-#gulp boilerplate v2
+#gulp boilerplate
 
-a revised simple gulp boilerplate that gives you
+a boilerplate for gulp files!
 
 * static server with automatic live reload
 * jade compilation
-* less compilation
+* stylus compilation
 * coffeescript compilation
 
 The aim is to get you up and running with something in _gulp_ quickly
@@ -14,18 +14,18 @@ as a prerequisite it's assumed you have `npm` installed and the `gulp-cli`.
 
 1. clone the repo
 
-		git clone https://github.com/jh3y/gulp-boilerplate-v2.git
+    git clone https://github.com/jh3y/gulp-boilerplate.git
 
 2. install dependencies
 
-		npm install
+    npm install
 
 3. start gulp
 
-		gulp
+    gulp
 
 4. start hacking away with super fast livereload goodness.
 
 Any problems or questions, feel free to post an issue or tweet me, @_jh3y!
 
-@jh3y 2014
+@jh3y 2015
