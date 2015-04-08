@@ -4,6 +4,7 @@ module.exports = {
     name: 'gulp-boilerplate'
   },
   paths: {
+    base: env,
     sources: {
       coffee: 'src/coffee/**/*.coffee',
       docs: 'src/jade/*.jade',
