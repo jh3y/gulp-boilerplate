@@ -1,0 +1,39 @@
+colorPalette = {
+  red   : #E74C3C
+  green : #2ECC71
+  purple: #8E44AD
+  lilac : #AC92CE
+  white : #FFFFFF
+}
+
+for key, value in colorPalette
+  .bg--{key}
+    background-color value
+  .tx--{key}
+    color value
+
+remify(size)
+  val = size / (size * 0 + 1)
+  ((val) / 16)rem
+
+font-size(size)
+  font-size size
+  val = size / (size * 0 + 1)
+  font-size ((val) / 16)rem
+
+body
+  color #777
+  padding 0 0 0 0
+  margin 0 0 0 0
+
+header
+  margin 0
+  padding 20px
+  h1
+    font-size(48px)
+
+a
+  text-decoration none
+
+.tx--center
+  text-align center
