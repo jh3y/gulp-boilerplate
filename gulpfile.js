@@ -18,7 +18,7 @@ var gulp      = require('gulp'),
 /*
   serve; creates local static livereload server using browser-sync.
 */
-gulp.task('serve', function(event) {
+gulp.task('serve', ['build:complete'], function(event) {
   browserSync(gConfig.server);
   return gulp.watch(sources.overwatch).on('change', browserSync.reload);
 });
@@ -106,11 +106,10 @@ gulp.task('watch', [
   'coffee:watch'
 ]);
 
-/*DEFAULT TASK*/
+
 var defaultTasks = isDeploy ? [
   'deploy:ghpages'
 ]:[
-  'build:complete',
   'serve',
   'watch'
 ];

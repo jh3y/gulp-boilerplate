@@ -6,7 +6,7 @@ module.exports = {
   server: {
     port   : 1987,
     server : {
-      baseDir: gConfig.paths.base
+      baseDir: env
     }
   },
   prefix: [
@@ -25,6 +25,9 @@ module.exports = {
       overwatch: 'out/**/*.{html,js,css}'
     },
     destinations: {
+      testing: {
+        screenshots: './testing/screenshots'
+      },
       js: env + 'js/',
       html: env,
       css: env + 'css/'
