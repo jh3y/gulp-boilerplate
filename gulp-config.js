@@ -3,6 +3,18 @@ module.exports = {
   pkg: {
     name: 'gulp-boilerplate'
   },
+  server: {
+    port   : 1987,
+    server : {
+      baseDir: gConfig.paths.base
+    }
+  },
+  prefix: [
+    'last 3 versions',
+    'Blackberry 10',
+    'Android 3',
+    'Android 4'
+  ],
   paths: {
     base: env,
     sources: {

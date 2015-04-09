@@ -26,6 +26,9 @@ as a prerequisite it's assumed you have `npm` installed and the `gulp-cli`.
 
 4. start hacking away with super fast livereload goodness.
 
+
+Use `gulp --require coffee-script/register` to run a gulpfile written in CoffeeScript.
+
 Any problems or questions, feel free to post an issue or tweet me, @_jh3y!
 
 @jh3y 2015
