@@ -28,6 +28,7 @@ module.exports = {
       testing: {
         screenshots: './testing/screenshots'
       },
+      dist: './dist',
       js: env + 'js/',
       html: env,
       css: env + 'css/'
