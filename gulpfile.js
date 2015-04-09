@@ -3,9 +3,10 @@ var gulp      = require('gulp'),
   browserSync = require('browser-sync'),
   plugins     = require('gulp-load-plugins')({
     rename: {
-      'gulp-gh-pages'  : 'deploy',
-      'gulp-util'      : 'gUtil',
-      'gulp-minify-css': 'minify'
+      'gulp-gh-pages'    : 'deploy',
+      'gulp-util'        : 'gUtil',
+      'gulp-minify-css'  : 'minify',
+      'gulp-autoprefixer': 'prefix'
     }
   }),
   isDist       = (plugins.gUtil.env.dist)    ? true: false,
@@ -14,18 +15,11 @@ var gulp      = require('gulp'),
   sources      = gConfig.paths.sources,
   destinations = gConfig.paths.destinations;
 
-// isDist ? destinations.dist: destinations.js
-/* Use this magic to adhere to passed in flags. Means you can pass in flags*/
 /*
   serve; creates local static livereload server using browser-sync.
 */
 gulp.task('serve', function(event) {
-  browserSync({
-    port   : 1987,
-    server : {
-      baseDir: gConfig.paths.base
-    }
-  });
+  browserSync(gConfig.server);
   return gulp.watch(sources.overwatch).on('change', browserSync.reload);
 });
 
@@ -41,14 +35,14 @@ gulp.task('serve', function(event) {
 gulp.task('coffee:compile', function(event) {
   return gulp.src(sources.coffee)
     .pipe(plugins.plumber())
-    .pipe(plugins.concat('app.coffee'))
+    .pipe(plugins.concat(gConfig.pkg.name + '.coffee'))
     .pipe(plugins.coffee())
-    .pipe(gulp.dest(destinations.js))
+    .pipe(isDeploy ? plugins.gUtil.noop(): gulp.dest(isDist ? destination.dist: destinations.js))
     .pipe(plugins.uglify())
     .pipe(plugins.rename({
       suffix: '.min'
     }))
-    .pipe(gulp.dest(destinations.js));
+    .pipe(gulp.dest(isDist ? destination.dist: destinations.js));
 });
 gulp.task('coffee:watch', function(event) {
   gulp.watch(sources.coffee, ['coffee:compile']);
@@ -65,12 +59,13 @@ gulp.task('stylus:compile', function(event) {
     .pipe(plugins.plumber())
     .pipe(plugins.concat(gConfig.pkg.name + '.stylus'))
     .pipe(plugins.stylus())
-    .pipe(gulp.dest(destinations.css))
+    .pipe(isDeploy ? plugins.gUtil.noop(): gulp.dest(isDist ? destination.dist: destinations.css))
+    .pipe(plugins.prefix(gConfig.prefix))
     .pipe(plugins.minify())
     .pipe(plugins.rename({
       suffix: '.min'
     }))
-    .pipe(gulp.dest(destinations.css));
+    .pipe(gulp.dest(isDist ? destination.dist: destinations.css));
 });
 gulp.task('stylus:watch', function(event) {
   gulp.watch(sources.stylus, ['stylus:compile']);
@@ -86,11 +81,17 @@ gulp.task('stylus:watch', function(event) {
 gulp.task('jade:compile', function(event) {
   return gulp.src(sources.docs)
     .pipe(plugins.plumber())
-    .pipe(plugins.jade())
+    .pipe(isDeploy ? plugins.jade({pretty: true}): plugins.jade())
     .pipe(gulp.dest(destinations.html));
 });
 gulp.task('jade:watch', function(event){
   gulp.watch(sources.jade, ['jade:compile']);
+});
+
+gulp.task('deploy:ghpages', ['build:complete'], function(event) {
+  isDeploy = true;
+  return gulp.src(sources.overwatch)
+    .pipe(plugins.deploy());
 });
 
 gulp.task('build:complete', [
@@ -106,8 +107,12 @@ gulp.task('watch', [
 ]);
 
 /*DEFAULT TASK*/
-gulp.task('default', [
+var defaultTasks = isDeploy ? [
+  'deploy:ghpages'
+]:[
   'build:complete',
   'serve',
   'watch'
-]);
+];
+
+gulp.task('default', defaultTasks);
