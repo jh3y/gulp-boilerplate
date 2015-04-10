@@ -15,7 +15,7 @@ var gulp       = require('gulp'),
   serve; creates local static livereload server using browser-sync.
 */
 gulp.task('serve', ['build:complete'], function(event) {
-  browserSync(gConfig.plugins.browserSync);
+  browserSync(pluginOpts.browserSync);
   return gulp.watch(sources.overwatch).on('change', browserSync.reload);
 });
 
