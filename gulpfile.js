@@ -12,7 +12,8 @@ var gulp      = require('gulp'),
   isDist       = (plugins.gUtil.env.dist)    ? true: false,
   isDev        = (plugins.gUtil.env.dev)     ? true: false,
   isDeploy     = (plugins.gUtil.env.deploy)  ? true: false,
-	isMapped     = (plugins.gUtil.env.map)     ? true: false,
+  isMapped     = (plugins.gUtil.env.map)     ? true: false,
+  isStat       = (plugins.gUtil.env.stat)    ? true: false,
   sources      = gConfig.paths.sources,
   destinations = gConfig.paths.destinations;
 
@@ -40,12 +41,14 @@ gulp.task('coffee:compile', function(event) {
     .pipe(isMapped ? gulp.dest(destinations.js): plugins.gUtil.noop())
     .pipe(isMapped ? plugins.sourcemaps.init(): plugins.gUtil.noop())
     .pipe(plugins.concat(gConfig.pkg.name + '.js'))
+    .pipe(isStat ? plugins.size({showFiles: true}): plugins.gUtil.noop())
     .pipe(isDeploy ? plugins.gUtil.noop(): gulp.dest(isDist ? destinations.dist: destinations.js))
     .pipe(plugins.uglify())
     .pipe(plugins.rename({
       suffix: '.min'
     }))
     .pipe(isMapped ? plugins.sourcemaps.write('./'): plugins.gUtil.noop())
+    .pipe(isStat ? plugins.size({showFiles: true}): plugins.gUtil.noop())
     .pipe(gulp.dest(isDist ? destinations.dist: destinations.js));
 });
 gulp.task('coffee:watch', function(event) {
@@ -63,12 +66,14 @@ gulp.task('stylus:compile', function(event) {
     .pipe(plugins.plumber())
     .pipe(plugins.concat(gConfig.pkg.name + '.stylus'))
     .pipe(plugins.stylus())
+    .pipe(isStat ? plugins.size({showFiles: true}): plugins.gUtil.noop())
     .pipe(isDeploy ? plugins.gUtil.noop(): gulp.dest(isDist ? destination.dist: destinations.css))
     .pipe(plugins.prefix(gConfig.prefix))
     .pipe(plugins.minify())
     .pipe(plugins.rename({
       suffix: '.min'
     }))
+    .pipe(isStat ? plugins.size({showFiles: true}): plugins.gUtil.noop())
     .pipe(gulp.dest(isDist ? destination.dist: destinations.css));
 });
 gulp.task('stylus:watch', function(event) {
