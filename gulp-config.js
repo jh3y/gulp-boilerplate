@@ -3,18 +3,38 @@ module.exports = {
   pkg: {
     name: 'gulp-boilerplate'
   },
-  server: {
-    port   : 1987,
-    server : {
-      baseDir: env
+  pluginOpts: {
+    coffee: {
+      bare: true
+    },
+    jade: {
+      pretty: true
+    },
+    gSize: {
+      showFiles: true
+    },
+    browserSync: {
+      port   : 1987,
+      server : {
+        baseDir: env
+      }
+    },
+    prefix: [
+      'last 3 versions',
+      'Blackberry 10',
+      'Android 3',
+      'Android 4'
+    ],
+    wrap: '(function() { <%= contents %> }());',
+    load: {
+      rename: {
+        'gulp-gh-pages'    : 'deploy',
+        'gulp-util'        : 'gUtil',
+        'gulp-minify-css'  : 'minify',
+        'gulp-autoprefixer': 'prefix'
+      }
     }
   },
-  prefix: [
-    'last 3 versions',
-    'Blackberry 10',
-    'Android 3',
-    'Android 4'
-  ],
   paths: {
     base: env,
     sources: {
