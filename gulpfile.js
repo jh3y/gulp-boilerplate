@@ -1,14 +1,8 @@
-var gulp      = require('gulp'),
-  gConfig     = require('./gulp-config'),
-  browserSync = require('browser-sync'),
-  plugins     = require('gulp-load-plugins')({
-    rename: {
-      'gulp-gh-pages'    : 'deploy',
-      'gulp-util'        : 'gUtil',
-      'gulp-minify-css'  : 'minify',
-      'gulp-autoprefixer': 'prefix'
-    }
-  }),
+var gulp       = require('gulp'),
+  gConfig      = require('./gulp-config'),
+  browserSync  = require('browser-sync'),
+  pluginOpts   = gConfig.pluginOpts,
+  plugins      = require('gulp-load-plugins')(pluginOpts.load),
   isDist       = (plugins.gUtil.env.dist)    ? true: false,
   isDev        = (plugins.gUtil.env.dev)     ? true: false,
   isDeploy     = (plugins.gUtil.env.deploy)  ? true: false,
@@ -21,7 +15,7 @@ var gulp      = require('gulp'),
   serve; creates local static livereload server using browser-sync.
 */
 gulp.task('serve', ['build:complete'], function(event) {
-  browserSync(gConfig.server);
+  browserSync(gConfig.plugins.browserSync);
   return gulp.watch(sources.overwatch).on('change', browserSync.reload);
 });
 
@@ -37,18 +31,19 @@ gulp.task('serve', ['build:complete'], function(event) {
 gulp.task('coffee:compile', function(event) {
   return gulp.src(sources.coffee)
     .pipe(plugins.plumber())
-    .pipe(plugins.coffee())
+    .pipe(plugins.coffee(pluginOpts.coffee))
     .pipe(isMapped ? gulp.dest(destinations.js): plugins.gUtil.noop())
     .pipe(isMapped ? plugins.sourcemaps.init(): plugins.gUtil.noop())
     .pipe(plugins.concat(gConfig.pkg.name + '.js'))
-    .pipe(isStat ? plugins.size({showFiles: true}): plugins.gUtil.noop())
+    .pipe(plugins.wrap(pluginOpts.wrap))
+    .pipe(isStat ? plugins.size(pluginOpts.gSize): plugins.gUtil.noop())
     .pipe(isDeploy ? plugins.gUtil.noop(): gulp.dest(isDist ? destinations.dist: destinations.js))
     .pipe(plugins.uglify())
     .pipe(plugins.rename({
       suffix: '.min'
     }))
     .pipe(isMapped ? plugins.sourcemaps.write('./'): plugins.gUtil.noop())
-    .pipe(isStat ? plugins.size({showFiles: true}): plugins.gUtil.noop())
+    .pipe(isStat ? plugins.size(pluginOpts.gSize): plugins.gUtil.noop())
     .pipe(gulp.dest(isDist ? destinations.dist: destinations.js));
 });
 gulp.task('coffee:watch', function(event) {
@@ -66,14 +61,14 @@ gulp.task('stylus:compile', function(event) {
     .pipe(plugins.plumber())
     .pipe(plugins.concat(gConfig.pkg.name + '.stylus'))
     .pipe(plugins.stylus())
-    .pipe(isStat ? plugins.size({showFiles: true}): plugins.gUtil.noop())
+    .pipe(isStat ? plugins.size(pluginOpts.gSize): plugins.gUtil.noop())
     .pipe(isDeploy ? plugins.gUtil.noop(): gulp.dest(isDist ? destination.dist: destinations.css))
     .pipe(plugins.prefix(gConfig.prefix))
     .pipe(plugins.minify())
     .pipe(plugins.rename({
       suffix: '.min'
     }))
-    .pipe(isStat ? plugins.size({showFiles: true}): plugins.gUtil.noop())
+    .pipe(isStat ? plugins.size(pluginOpts.gSize): plugins.gUtil.noop())
     .pipe(gulp.dest(isDist ? destination.dist: destinations.css));
 });
 gulp.task('stylus:watch', function(event) {
@@ -90,7 +85,7 @@ gulp.task('stylus:watch', function(event) {
 gulp.task('jade:compile', function(event) {
   return gulp.src(sources.docs)
     .pipe(plugins.plumber())
-    .pipe(isDeploy ? plugins.jade({pretty: true}): plugins.jade())
+    .pipe(isDeploy ? plugins.jade(): plugins.jade(pluginOpts.jade))
     .pipe(gulp.dest(destinations.html));
 });
 gulp.task('jade:watch', function(event){
