@@ -1,10 +1,16 @@
-(function() {
-  var greet;
+(function() { var greet;
 
-  greet = function(msg) {
-    return console.log(msg);
-  };
+greet = function(msg) {
+  return console.log(msg);
+};
 
-  greet('Hello gulper!');
+greet('Hello gulper!');
 
-}).call(this);
+var sum;
+
+sum = function(a, b) {
+  return a + b;
+};
+
+console.log(sum(1, 2));
+ }());
