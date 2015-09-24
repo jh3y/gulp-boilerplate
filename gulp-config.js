@@ -1,14 +1,19 @@
-var env = 'out/';
+var env = 'public/',
+  pkg   = require('./package.json');
 module.exports = {
   pkg: {
-    name: 'gulp-boilerplate'
+    name: pkg.name
   },
   pluginOpts: {
     coffee: {
       bare: true
     },
     jade: {
-      pretty: true
+      pretty: true,
+      data  : {
+        name       : pkg.name,
+        description: pkg.description
+      }
     },
     gSize: {
       showFiles: true
@@ -38,20 +43,17 @@ module.exports = {
   paths: {
     base: env,
     sources: {
-      coffee: 'src/coffee/**/*.coffee',
-      docs: 'src/jade/*.jade',
-      jade: 'src/jade/**/*.jade',
-      stylus: 'src/stylus/**/*.stylus',
+      coffee   : 'src/coffee/**/*.coffee',
+      docs     : 'src/jade/*.jade',
+      jade     : 'src/jade/**/*.jade',
+      stylus   : 'src/stylus/**/*.stylus',
       overwatch: 'out/**/*.{html,js,css}'
     },
     destinations: {
-      testing: {
-        screenshots: './testing/screenshots'
-      },
       dist: './dist',
-      js: env + 'js/',
+      js  : env + 'js/',
       html: env,
-      css: env + 'css/'
+      css : env + 'css/'
     }
   }
 };
