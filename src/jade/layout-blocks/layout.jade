@@ -7,10 +7,10 @@ doctype
 head
   meta(charset="utf-8")
   meta(http-equiv="X-UA-Compatible", content="IE=edge")
-  title gulp boilerplate
+  title= name
   meta(name="viewport", content="width=device-width, initial-scale=1, user-scalable=0, maximum-scale=1.0")
-  meta(name="description", content="a boilerplate for gulp")
-  link(rel="stylesheet", href="css/gulp-boilerplate.min.css")
+  meta(name="description", content= description)
+  link(rel="stylesheet", href="css/#{name}.min.css")
 body.bg--lilac.tx--white.tx--center
   <!--[if lt IE 9]>
   <p class="browsehappy">
@@ -24,5 +24,5 @@ body.bg--lilac.tx--white.tx--center
   include header
   block content
   include footer
-  script(src="js/gulp-boilerplate.min.js")
+  script(src="js/#{name}.min.js")
   <!--<![endif]-->
