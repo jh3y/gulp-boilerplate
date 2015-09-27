@@ -47,7 +47,7 @@ module.exports = {
       docs     : 'src/jade/*.jade',
       jade     : 'src/jade/**/*.jade',
       stylus   : 'src/stylus/**/*.stylus',
-      overwatch: 'out/**/*.{html,js,css}'
+      overwatch: env + '**/*.{html,js,css}'
     },
     destinations: {
       dist: './dist',
