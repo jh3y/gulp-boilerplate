@@ -1,8 +1,8 @@
 var gulp       = require('gulp'),
   gConfig      = require('./gulp-config'),
   browserSync  = require('browser-sync'),
-  pluginOpts   = gConfig.pluginOpts,
-  plugins      = require('gulp-load-plugins')(pluginOpts.load),
+  opts         = gConfig.pluginOpts,
+  plugins      = require('gulp-load-plugins')(opts.load),
   isDist       = (plugins.gUtil.env.dist)    ? true: false,
   isDev        = (plugins.gUtil.env.dev)     ? true: false,
   isDeploy     = (plugins.gUtil.env.deploy)  ? true: false,
@@ -15,11 +15,11 @@ var gulp       = require('gulp'),
   serve; creates local static livereload server using browser-sync.
 */
 gulp.task('serve', ['build:complete'], function(event) {
-  browserSync(pluginOpts.browserSync);
-  return gulp.watch(sources.overwatch).on('change', browserSync.reload);
+  browserSync(opts.browserSync);
+  return gulp.watch(sources.overwatch).on('change', function(file) {
+    if (file.path.indexOf('.css') === -1) browserSync.reload();
+  });
 });
-
-
 
 /*
   coffee:compile/coffee:watch
@@ -27,23 +27,25 @@ gulp.task('serve', ['build:complete'], function(event) {
   watch for changes to CoffeeScript files then compile app JavaScript file
   from source, concatenating and uglifying content and publishing output based on env flag. For example, if we want sourcemaps we can output our individual JS files and the sourcemap for them to the desired directory by using the --map flag.
 */
-
-gulp.task('coffee:compile', function(event) {
+gulp.task('coffee:lint', function() {
+  return gulp.src(sources.coffee)
+    .pipe(plugins.coffeeLint())
+    .pipe(plugins.coffeeLint.reporter());
+});
+gulp.task('coffee:compile', ['coffee:lint'], function(event) {
   return gulp.src(sources.coffee)
     .pipe(plugins.plumber())
-    .pipe(plugins.coffee(pluginOpts.coffee))
+    .pipe(plugins.coffee(opts.coffee))
     .pipe(isMapped ? gulp.dest(destinations.js): plugins.gUtil.noop())
     .pipe(isMapped ? plugins.sourcemaps.init(): plugins.gUtil.noop())
     .pipe(plugins.concat(gConfig.pkg.name + '.js'))
-    .pipe(plugins.wrap(pluginOpts.wrap))
-    .pipe(isStat ? plugins.size(pluginOpts.gSize): plugins.gUtil.noop())
+    .pipe(plugins.wrap(opts.wrap))
+    .pipe(isStat ? plugins.size(opts.gSize): plugins.gUtil.noop())
     .pipe(isDeploy ? plugins.gUtil.noop(): gulp.dest(isDist ? destinations.dist: destinations.js))
     .pipe(plugins.uglify())
-    .pipe(plugins.rename({
-      suffix: '.min'
-    }))
+    .pipe(plugins.rename(opts.rename))
     .pipe(isMapped ? plugins.sourcemaps.write('./'): plugins.gUtil.noop())
-    .pipe(isStat ? plugins.size(pluginOpts.gSize): plugins.gUtil.noop())
+    .pipe(isStat ? plugins.size(opts.gSize): plugins.gUtil.noop())
     .pipe(gulp.dest(isDist ? destinations.dist: destinations.js));
 });
 gulp.task('coffee:watch', function(event) {
@@ -56,25 +58,28 @@ gulp.task('coffee:watch', function(event) {
   watch for changes to stylus files then compile stylesheet from source
   auto prefixing content and generating output based on env flag.
 */
+gulp.task('stylus:lint', function() {
+  return gulp.src(sources.stylus)
+    .pipe(plugins.stylint())
+    .pipe(plugins.stylint.reporter());
+});
 gulp.task('stylus:compile', function(event) {
   return gulp.src(sources.stylus)
     .pipe(plugins.plumber())
     .pipe(plugins.concat(gConfig.pkg.name + '.stylus'))
     .pipe(plugins.stylus())
-    .pipe(isStat ? plugins.size(pluginOpts.gSize): plugins.gUtil.noop())
+    .pipe(isStat ? plugins.size(opts.gSize): plugins.gUtil.noop())
     .pipe(isDeploy ? plugins.gUtil.noop(): gulp.dest(isDist ? destination.dist: destinations.css))
-    .pipe(plugins.prefix(gConfig.prefix))
+    .pipe(plugins.prefix(opts.prefix))
     .pipe(plugins.minify())
-    .pipe(plugins.rename({
-      suffix: '.min'
-    }))
-    .pipe(isStat ? plugins.size(pluginOpts.gSize): plugins.gUtil.noop())
-    .pipe(gulp.dest(isDist ? destination.dist: destinations.css));
+    .pipe(plugins.rename(opts.rename))
+    .pipe(isStat ? plugins.size(opts.gSize): plugins.gUtil.noop())
+    .pipe(gulp.dest(isDist ? destination.dist: destinations.css))
+    .pipe(browserSync.stream());
 });
 gulp.task('stylus:watch', function(event) {
   gulp.watch(sources.stylus, ['stylus:compile']);
 });
-
 
 /*
   jade:compile/jade:watch
@@ -85,7 +90,7 @@ gulp.task('stylus:watch', function(event) {
 gulp.task('jade:compile', function(event) {
   return gulp.src(sources.docs)
     .pipe(plugins.plumber())
-    .pipe(isDeploy ? plugins.jade(): plugins.jade(pluginOpts.jade))
+    .pipe(isDeploy ? plugins.jade(): plugins.jade(opts.jade))
     .pipe(gulp.dest(destinations.html));
 });
 gulp.task('jade:watch', function(event){
@@ -109,7 +114,6 @@ gulp.task('watch', [
   'stylus:watch',
   'coffee:watch'
 ]);
-
 
 var defaultTasks = isDeploy ? [
   'deploy:ghpages'

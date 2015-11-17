@@ -18,6 +18,9 @@ module.exports = {
     gSize: {
       showFiles: true
     },
+    rename: {
+      suffix: '.min'
+    },
     browserSync: {
       port   : 1987,
       server : {
@@ -36,7 +39,8 @@ module.exports = {
         'gulp-gh-pages'    : 'deploy',
         'gulp-util'        : 'gUtil',
         'gulp-minify-css'  : 'minify',
-        'gulp-autoprefixer': 'prefix'
+        'gulp-autoprefixer': 'prefix',
+        'gulp-coffeelint'  : 'coffeeLint'
       }
     }
   },
