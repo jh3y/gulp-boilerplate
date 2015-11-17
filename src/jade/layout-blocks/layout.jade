@@ -1,9 +1,4 @@
-doctype
-<!--[if lt IE 7]> <html class="no-js ie lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
-<!--[if IE 7]> <html class="no-js ie lt-ie9 lt-ie10 lt-ie8" lang="en"> <![endif]-->
-<!--[if IE 8]> <html class="no-js ie lt-ie9 lt-ie10" lang="en"> <![endif]-->
-<!--[if IE 9]> <html class="no-js ie lt-ie10" lang="en"> <![endif]-->
-<!--[if gt IE 9]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+html(lang="en-us")
 head
   meta(charset="utf-8")
   meta(http-equiv="X-UA-Compatible", content="IE=edge")
@@ -12,17 +7,7 @@ head
   meta(name="description", content= description)
   link(rel="stylesheet", href="css/#{name}.min.css")
 body.bg--lilac.tx--white.tx--center
-  <!--[if lt IE 9]>
-  <p class="browsehappy">
-  You are using an
-  <strong>outdated</strong> browser. Please
-  <a href="http://browsehappy.com/">upgrade your browser</a>
-  to improve your experience.
-  </p>
-  <![endif]-->
-  <!--[if gt IE 8]><!-->
   include header
   block content
   include footer
   script(src="js/#{name}.min.js")
-  <!--<![endif]-->
