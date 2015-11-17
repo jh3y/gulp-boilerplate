@@ -2,14 +2,15 @@
 
 a boilerplate for gulp files!
 
-* static server with automatic live reload
-* jade compilation
-* stylus compilation
-* coffeescript compilation
+* Static server with automatic live reload/style injection
+* Jade compilation
+* Stylus compilation
+* Coffeescript compilation
+* Source linting
 
 The aim is to get you up and running with something in _gulp_ quickly
 
-##usage
+##Usage
 as a prerequisite it's assumed you have `npm` installed and the `gulp-cli`.
 
 1. clone the repo

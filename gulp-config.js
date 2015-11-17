@@ -39,8 +39,7 @@ module.exports = {
         'gulp-gh-pages'    : 'deploy',
         'gulp-util'        : 'gUtil',
         'gulp-minify-css'  : 'minify',
-        'gulp-autoprefixer': 'prefix',
-        'gulp-coffeelint'  : 'coffeeLint'
+        'gulp-autoprefixer': 'prefix'
       }
     }
   },
