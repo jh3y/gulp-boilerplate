@@ -2,13 +2,25 @@
 
 a boilerplate for gulp files!
 
-* Static server with automatic live reload/style injection
-* Jade compilation
-* Stylus compilation
-* Coffeescript compilation
+* Markup compilation
+* Stylesheet compilation
+* Script compilation
 * Source linting
+* Static server with automatic live reload/style injection
 
-The aim is to get you up and running with something in _gulp_ quickly
+The aim is to get you up and running with something in _gulp_ quickly!
+
+Currently the boilerplate makes use of `jade`, `stylus` and `CoffeeScript`. But these could easily be swapped out/removed based on your requirements.
+
+The general presumption is that most projects require some form of `markup`, `style` and `script` compilation in addition to watching. This bundled in with some static server capability if required.
+
+The ideal is that _you_ will fork your own version and adapt it to fit in with the tech stack you are using and the tasks you need.
+
+There are many alterations you could make.
+
+For example;
+* You don't use __jade__, you remove the need for __jade__ by adjusting your markup tasks to simply export markup to a desired destination post linting.
+* You need `browserify` so you adjust your compilation task to make use of `browserify` bundling (this scenario is not as straightforward as normal `gulp` tasks and requires a slightly different set up to get the output from `browserify` as a readable stream to be used by `gulp`).
 
 ##Usage
 as a prerequisite it's assumed you have `npm` installed and the `gulp-cli`.
@@ -28,7 +40,25 @@ as a prerequisite it's assumed you have `npm` installed and the `gulp-cli`.
 4. start hacking away with super fast livereload goodness.
 
 
+##Tasks
+* `serve`: Set up instance of `browsersync` watching `build` directory w/ live reload/reinjection enabled for rapid static site development.
+* `watch`: Watches all declared source files for changes and triggers compilation.
+* `compile`: Compiles sources.
+* `deploy`: Deploys build output to `gh-pages` branch on repo.
+* `scripts:lint`: Lints source script files.
+* `scripts:compile`: Compiles source script files.
+* `scripts:watch`: Watches source script files for changes and triggers compilation.
+* `styles:lint`: Lints source script files.
+* `styles:compile`: Compiles source script files.
+* `styles:watch`: Watches source script files for changes and triggers compilation.
+* `markup:lint`: Lints source script files.
+* `markup:compile`: Compiles source script files.
+* `markup:watch`: Watches source script files for changes and triggers compilation.
 
+##License
+MIT
+
+===
 Any problems or questions, feel free to post an issue or tweet me, @_jh3y!
 
 @jh3y 2015
