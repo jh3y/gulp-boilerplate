@@ -14,7 +14,7 @@ var gulp      = require('gulp'),
 /*
   serve; creates local static livereload server using browser-sync.
 */
-gulp.task('serve', ['build:complete'], function(event) {
+gulp.task('serve', ['compile'], function(event) {
   browserSync(opts.browserSync);
   return gulp.watch(src.overwatch).on('change', function(file) {
     if (file.path.indexOf('.css') === -1) browserSync.reload();
@@ -22,18 +22,18 @@ gulp.task('serve', ['build:complete'], function(event) {
 });
 
 /*
-  coffee:compile/coffee:watch
+  scripts:compile/scripts:watch
 
-  watch for changes to CoffeeScript files then compile app JavaScript file
+  watch for changes to scriptsScript files then compile app JavaScript file
   from source, concatenating and uglifying content and publishing output based on env flag. For example, if we want sourcemaps we can output our individual JS files and the sourcemap for them to the desired directory by using the --map flag.
 */
-gulp.task('coffee:lint', function() {
-  return gulp.src(src.coffee)
+gulp.task('scripts:lint', function() {
+  return gulp.src(src.scripts)
     .pipe(plugins.coffeelint())
     .pipe(plugins.coffeelint.reporter());
 });
-gulp.task('coffee:compile', ['coffee:lint'], function(event) {
-  return gulp.src(src.coffee)
+gulp.task('scripts:compile', ['scripts:lint'], function(event) {
+  return gulp.src(src.scripts)
     .pipe(plugins.plumber())
     .pipe(plugins.coffee(opts.coffee))
     .pipe(isMapped ? gulp.dest(dest.js): plugins.gUtil.noop())
@@ -48,25 +48,25 @@ gulp.task('coffee:compile', ['coffee:lint'], function(event) {
     .pipe(isStat ? plugins.size(opts.gSize): plugins.gUtil.noop())
     .pipe(gulp.dest(isDist ? dest.dist: dest.js));
 });
-gulp.task('coffee:watch', function(event) {
-  gulp.watch(src.coffee, ['coffee:compile']);
+gulp.task('scripts:watch', function(event) {
+  gulp.watch(src.scripts, ['scripts:compile']);
 });
 
 /*
-  stylus:compile/stylus:watch
+  styles:compile/styles:watch
 
-  watch for changes to stylus files then compile stylesheet from source
+  watch for changes to styles files then compile stylesheet from source
   auto prefixing content and generating output based on env flag.
 */
-gulp.task('stylus:lint', function() {
-  return gulp.src(src.stylus)
-    .pipe(plugins.stylint())
+gulp.task('styles:lint', function() {
+  return gulp.src(src.styles)
+    .pipe(plugins.stylint(opts.stylint))
     .pipe(plugins.stylint.reporter());
 });
-gulp.task('stylus:compile', function(event) {
-  return gulp.src(src.stylus)
+gulp.task('styles:compile', ['styles:lint'], function(event) {
+  return gulp.src(src.styles)
     .pipe(plugins.plumber())
-    .pipe(plugins.concat(gConfig.pkg.name + '.stylus'))
+    .pipe(plugins.concat(gConfig.pkg.name + '.styles'))
     .pipe(plugins.stylus())
     .pipe(isStat ? plugins.size(opts.gSize): plugins.gUtil.noop())
     .pipe(isDeploy ? plugins.gUtil.noop(): gulp.dest(isDist ? destination.dist: dest.css))
@@ -77,50 +77,50 @@ gulp.task('stylus:compile', function(event) {
     .pipe(gulp.dest(isDist ? destination.dist: dest.css))
     .pipe(browserSync.stream());
 });
-gulp.task('stylus:watch', function(event) {
-  gulp.watch(src.stylus, ['stylus:compile']);
+gulp.task('styles:watch', function(event) {
+  gulp.watch(src.styles, ['styles:compile']);
 });
 
 /*
-  jade:compile/jade:watch
+  markup:compile/markup:watch
 
-  watch for all jade file changes then compile
+  watch for all markup file changes then compile
   page document files.
 */
-gulp.task('jade:lint', function() {
-  return gulp.src(src.jade)
+gulp.task('markup:lint', function() {
+  return gulp.src(src.markup)
     .pipe(plugins.jadelint());
 });
-gulp.task('jade:compile', function() {
+gulp.task('markup:compile', function() {
   return gulp.src(src.docs)
     .pipe(plugins.plumber())
     .pipe(isDeploy ? plugins.jade(): plugins.jade(opts.jade))
     .pipe(gulp.dest(dest.html));
 });
-gulp.task('jade:watch', function(event){
-  gulp.watch(src.jade, ['jade:compile']);
+gulp.task('markup:watch', function(event){
+  gulp.watch(src.markup, ['markup:compile']);
 });
 
-gulp.task('deploy:ghpages', ['build:complete'], function(event) {
+gulp.task('deploy', ['compile'], function(event) {
   isDeploy = true;
   return gulp.src(src.overwatch)
     .pipe(plugins.deploy());
 });
 
-gulp.task('build:complete', [
-  'jade:compile',
-  'stylus:compile',
-  'coffee:compile'
+gulp.task('compile', [
+  'markup:compile',
+  'styles:compile',
+  'scripts:compile'
 ]);
 
 gulp.task('watch', [
-  'jade:watch',
-  'stylus:watch',
-  'coffee:watch'
+  'markup:watch',
+  'styles:watch',
+  'scripts:watch'
 ]);
 
 var defaultTasks = isDeploy ? [
-  'deploy:ghpages'
+  'deploy'
 ]:[
   'serve',
   'watch'

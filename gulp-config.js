@@ -5,8 +5,17 @@ module.exports = {
     name: pkg.name
   },
   pluginOpts: {
+    browserSync: {
+      port   : 1987,
+      server : {
+        baseDir: env
+      }
+    },
     coffee: {
       bare: true
+    },
+    gSize: {
+      showFiles: true
     },
     jade: {
       pretty: true,
@@ -15,16 +24,12 @@ module.exports = {
         description: pkg.description
       }
     },
-    gSize: {
-      showFiles: true
-    },
-    rename: {
-      suffix: '.min'
-    },
-    browserSync: {
-      port   : 1987,
-      server : {
-        baseDir: env
+    load: {
+      rename: {
+        'gulp-gh-pages'    : 'deploy',
+        'gulp-util'        : 'gUtil',
+        'gulp-minify-css'  : 'minify',
+        'gulp-autoprefixer': 'prefix'
       }
     },
     prefix: [
@@ -33,30 +38,28 @@ module.exports = {
       'Android 3',
       'Android 4'
     ],
-    wrap: '(function() { <%= contents %> }());',
-    load: {
-      rename: {
-        'gulp-gh-pages'    : 'deploy',
-        'gulp-util'        : 'gUtil',
-        'gulp-minify-css'  : 'minify',
-        'gulp-autoprefixer': 'prefix'
-      }
-    }
+    rename: {
+      suffix: '.min'
+    },
+    stylint: {
+      reporter: 'stylint-stylish'
+    },
+    wrap: '(function() { <%= contents %> }());'
   },
   paths: {
     base: env,
     sources: {
-      coffee   : 'src/coffee/**/*.coffee',
       docs     : 'src/jade/*.jade',
-      jade     : 'src/jade/**/*.jade',
-      stylus   : 'src/stylus/**/*.stylus',
-      overwatch: env + '**/*.{html,js,css}'
+      markup   : 'src/jade/**/*.jade',
+      overwatch: env + '**/*.{html,js,css}',
+      scripts  : 'src/coffee/**/*.coffee',
+      styles   : 'src/stylus/**/*.stylus'
     },
     destinations: {
       dist: './dist',
-      js  : env + 'js/',
+      css : env + 'css/',
       html: env,
-      css : env + 'css/'
+      js  : env + 'js/'
     }
   }
 };

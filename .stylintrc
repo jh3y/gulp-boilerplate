@@ -22,7 +22,7 @@
   "noImportant": true,
   "parenSpace": false,
   "placeholders": "always",
-  "prefixVarsWithDollar": false,
+  "prefixVarsWithDollar": true,
   "quotePref": false,
   "semicolons": "never",
   "sortOrder": "grouped",
