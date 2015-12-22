@@ -69,12 +69,12 @@ gulp.task('styles:compile', ['styles:lint'], function(event) {
     .pipe(plugins.concat(gConfig.pkg.name + '.styles'))
     .pipe(plugins.stylus())
     .pipe(isStat ? plugins.size(opts.gSize): plugins.gUtil.noop())
-    .pipe(isDeploy ? plugins.gUtil.noop(): gulp.dest(isDist ? destination.dist: dest.css))
+    .pipe(isDeploy ? plugins.gUtil.noop(): gulp.dest(isDist ? dest.dist: dest.css))
     .pipe(plugins.prefix(opts.prefix))
     .pipe(plugins.minify())
     .pipe(plugins.rename(opts.rename))
     .pipe(isStat ? plugins.size(opts.gSize): plugins.gUtil.noop())
-    .pipe(gulp.dest(isDist ? destination.dist: dest.css))
+    .pipe(gulp.dest(isDist ? dest.dist: dest.css))
     .pipe(browserSync.stream());
 });
 gulp.task('styles:watch', function(event) {

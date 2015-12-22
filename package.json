@@ -1,6 +1,6 @@
 {
   "name": "gulp-boilerplate",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "a starting point for using gulp",
   "devDependencies": {
     "browser-sync": "^2.5.3",
