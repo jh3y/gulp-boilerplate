@@ -66,11 +66,11 @@ gulp.task('styles:lint', function() {
 gulp.task('styles:compile', ['styles:lint'], function(event) {
   return gulp.src(src.styles)
     .pipe(plugins.plumber())
-    .pipe(plugins.concat(gConfig.pkg.name + '.styles'))
+    .pipe(plugins.concat(gConfig.pkg.name + '.stylus'))
     .pipe(plugins.stylus())
+    .pipe(plugins.prefix(opts.prefix))
     .pipe(isStat ? plugins.size(opts.gSize): plugins.gUtil.noop())
     .pipe(isDeploy ? plugins.gUtil.noop(): gulp.dest(isDist ? dest.dist: dest.css))
-    .pipe(plugins.prefix(opts.prefix))
     .pipe(plugins.minify())
     .pipe(plugins.rename(opts.rename))
     .pipe(isStat ? plugins.size(opts.gSize): plugins.gUtil.noop())
