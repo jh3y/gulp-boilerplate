@@ -28,7 +28,7 @@ module.exports = {
       rename: {
         'gulp-gh-pages'    : 'deploy',
         'gulp-util'        : 'gUtil',
-        'gulp-minify-css'  : 'minify',
+        'gulp-cssnano'     : 'minify',
         'gulp-autoprefixer': 'prefix'
       }
     },

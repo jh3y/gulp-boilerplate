@@ -1,4 +1,4 @@
-#gulp boilerplate
+# gulp boilerplate
 
 a boilerplate for gulp files!
 
@@ -22,7 +22,7 @@ For example;
 * You don't use __jade__, you remove the need for __jade__ by adjusting your markup tasks to simply export markup to a desired destination post linting.
 * You need `browserify` so you adjust your compilation task to make use of `browserify` bundling (this scenario is not as straightforward as normal `gulp` tasks and requires a slightly different set up to get the output from `browserify` as a readable stream to be used by `gulp`).
 
-##Usage
+## Usage
 as a prerequisite it's assumed you have `npm` installed and the `gulp-cli`.
 
 1. clone the repo
@@ -40,7 +40,12 @@ as a prerequisite it's assumed you have `npm` installed and the `gulp-cli`.
 4. start hacking away with super fast livereload goodness.
 
 
-##Tasks
+## Structure
+You could have a `gulpfile` with all your tasks in one file. But, if your task list grows and it starts becoming a case of having to hunt through the file to refactor/make changes, it might be easier to split up your file and refactor your tasks into separate modules.
+
+Tasks live under the `build-tasks` folder in relevant modules. For example, script related functions live within `scripts.js`. Each module exports aptly named functions such as `compile`, `lint` and `watch`. These are invoked from the `gulpfile`. For those that just want everything in one file, refer to `gulpfile.nomodule.js`.
+
+## Tasks
 * `serve`: Set up instance of `browsersync` watching `build` directory w/ live reload/reinjection enabled for rapid static site development.
 * `watch`: Watches all declared source files for changes and triggers compilation.
 * `compile`: Compiles sources.
@@ -55,10 +60,10 @@ as a prerequisite it's assumed you have `npm` installed and the `gulp-cli`.
 * `markup:compile`: Compiles source script files.
 * `markup:watch`: Watches source script files for changes and triggers compilation.
 
-##License
+## License
 MIT
 
 ===
 Any problems or questions, feel free to post an issue or tweet me, @_jh3y!
 
-@jh3y 2015
+@jh3y 2016
