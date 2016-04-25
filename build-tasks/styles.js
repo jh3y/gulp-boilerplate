@@ -1,5 +1,4 @@
 var gulp      = require('gulp'),
-  browserSync = require('browser-sync'),
   gConfig     = require('../gulp-config'),
   utils       = require('./utils'),
   opts        = gConfig.pluginOpts,
@@ -25,8 +24,7 @@ var gulp      = require('gulp'),
       .pipe(plugins.minify())
       .pipe(plugins.rename(opts.rename))
       .pipe(env.stat ? plugins.size(opts.gSize): plugins.gUtil.noop())
-      .pipe(gulp.dest(env.dist ? dest.dist: dest.css))
-      .pipe(browserSync.stream());
+      .pipe(gulp.dest(env.dist ? dest.dist: dest.css));
   },
   /* styles:watch */
   watch = function() {

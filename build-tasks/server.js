@@ -1,5 +1,8 @@
 var gulp      = require('gulp'),
-  browserSync = require('browser-sync'),
+  browsersync = require('browser-sync'),
+  vss         = require('vinyl-source-stream'),
+  vb          = require('vinyl-buffer'),
+  vf          = require('vinyl-file'),
   gConfig     = require('../gulp-config'),
   opts        = gConfig.pluginOpts,
   src         = gConfig.paths.sources,
@@ -8,9 +11,16 @@ var gulp      = require('gulp'),
     start; creates local static livereload server using browser-sync.
   */
   start = function() {
-    browserSync(opts.browserSync);
-    return gulp.watch(src.overwatch).on('change', function(file) {
-      if (file.path.indexOf('.css') === -1) browserSync.reload();
+    var server = browsersync.create();
+    server.init(opts.browserSync);
+    return server.watch(src.overwatch, function(evt, file) {
+      if (evt === 'change' && file.indexOf('.css') === -1)
+        server.reload();
+      if (evt === 'change' && file.indexOf('.css') !== -1)
+        vf.readSync(file)
+          .pipe(vss(file))
+          .pipe(vb())
+          .pipe(server.stream());
     });
   };
 
