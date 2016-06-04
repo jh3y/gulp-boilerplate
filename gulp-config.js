@@ -11,8 +11,8 @@ module.exports = {
         baseDir: env
       }
     },
-    coffee: {
-      bare: true
+    babel: {
+      presets: [ 'es2015' ]
     },
     gSize: {
       showFiles: true
@@ -52,7 +52,7 @@ module.exports = {
       docs     : 'src/jade/*.jade',
       markup   : 'src/jade/**/*.jade',
       overwatch: env + '**/*.{html,js,css}',
-      scripts  : 'src/coffee/**/*.coffee',
+      scripts  : 'src/js/**/*.js',
       styles   : 'src/stylus/**/*.stylus'
     },
     destinations: {

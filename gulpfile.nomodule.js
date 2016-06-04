@@ -29,24 +29,24 @@ gulp.task('serve', ['compile'], function(event) {
 */
 gulp.task('scripts:lint', function() {
   return gulp.src(src.scripts)
-    .pipe(plugins.coffeelint())
-    .pipe(plugins.coffeelint.reporter());
+    .pipe(plugins.eslint())
+    .pipe(plugins.eslint.format());
 });
 gulp.task('scripts:compile', ['scripts:lint'], function(event) {
   return gulp.src(src.scripts)
     .pipe(plugins.plumber())
-    .pipe(plugins.coffee(opts.coffee))
-    .pipe(isMapped ? gulp.dest(dest.js): plugins.gUtil.noop())
-    .pipe(isMapped ? plugins.sourcemaps.init(): plugins.gUtil.noop())
+    .pipe(plugins.babel(opts.babel))
+    .pipe(env.mapped ? gulp.dest(dest.js): plugins.gUtil.noop())
+    .pipe(env.mapped ? plugins.sourcemaps.init(): plugins.gUtil.noop())
     .pipe(plugins.concat(gConfig.pkg.name + '.js'))
     .pipe(plugins.wrap(opts.wrap))
-    .pipe(isStat ? plugins.size(opts.gSize): plugins.gUtil.noop())
-    .pipe(isDeploy ? plugins.gUtil.noop(): gulp.dest(isDist ? dest.dist: dest.js))
+    .pipe(env.stat ? plugins.size(opts.gSize): plugins.gUtil.noop())
+    .pipe(env.deploy ? plugins.gUtil.noop(): gulp.dest(env.dist ? dest.dist: dest.js))
     .pipe(plugins.uglify())
     .pipe(plugins.rename(opts.rename))
-    .pipe(isMapped ? plugins.sourcemaps.write('./'): plugins.gUtil.noop())
-    .pipe(isStat ? plugins.size(opts.gSize): plugins.gUtil.noop())
-    .pipe(gulp.dest(isDist ? dest.dist: dest.js));
+    .pipe(env.mapped ? plugins.sourcemaps.write('./'): plugins.gUtil.noop())
+    .pipe(env.stat ? plugins.size(opts.gSize): plugins.gUtil.noop())
+    .pipe(gulp.dest(env.dist ? dest.dist: dest.js));
 });
 gulp.task('scripts:watch', function(event) {
   gulp.watch(src.scripts, ['scripts:compile']);

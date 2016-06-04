@@ -10,7 +10,7 @@ a boilerplate for gulp files!
 
 The aim is to get you up and running with something in _gulp_ quickly!
 
-Currently the boilerplate makes use of `jade`, `stylus` and `CoffeeScript`. But these could easily be swapped out/removed based on your requirements.
+Currently the boilerplate makes use of `jade`, `stylus` and `es6/babel`. But these could easily be swapped out/removed based on your requirements.
 
 The general presumption is that most projects require some form of `markup`, `style` and `script` compilation in addition to watching. This bundled in with some static server capability if required.
 
@@ -39,6 +39,9 @@ as a prerequisite it's assumed you have `npm` installed and the `gulp-cli`.
 
 4. start hacking away with super fast livereload goodness.
 
+### babel-polyfill
+__NOTE::__ If you require the use of `babel` features need polyfilling, you'll need to include the `babel-polyfill` script file with your JavaScript files. You could generate an `infrastructure/vendor` js file containing this and include within a `<script>` tag. The `babel-polyfill` is located at `node_modules/babel-polyfill/dist/polyfill.{min.}js`.
+
 
 ## Structure
 You could have a `gulpfile` with all your tasks in one file. But, if your task list grows and it starts becoming a case of having to hunt through the file to refactor/make changes, it might be easier to split up your file and refactor your tasks into separate modules.
@@ -66,4 +69,4 @@ MIT
 ===
 Any problems or questions, feel free to post an issue or tweet me, @_jh3y!
 
-@jh3y 2016
+@jh3y 2016 :smile:
