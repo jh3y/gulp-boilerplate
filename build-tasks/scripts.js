@@ -9,14 +9,14 @@ var gulp      = require('gulp'),
   /* scripts:lint */
   lint = function() {
     return gulp.src(src.scripts)
-      .pipe(plugins.coffeelint())
-      .pipe(plugins.coffeelint.reporter());
+      .pipe(plugins.eslint())
+      .pipe(plugins.eslint.format());
   },
   /* scripts:compile */
   compile = function() {
     return gulp.src(src.scripts)
       .pipe(plugins.plumber())
-      .pipe(plugins.coffee(opts.coffee))
+      .pipe(plugins.babel(opts.babel))
       .pipe(env.mapped ? gulp.dest(dest.js): plugins.gUtil.noop())
       .pipe(env.mapped ? plugins.sourcemaps.init(): plugins.gUtil.noop())
       .pipe(plugins.concat(gConfig.pkg.name + '.js'))

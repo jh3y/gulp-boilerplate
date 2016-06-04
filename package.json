@@ -1,18 +1,20 @@
 {
   "name": "gulp-boilerplate",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "a starting point for using gulp",
   "scripts": {
     "update:packages": "node wipeDeps.js && rm -rf node_modules && npm update --save-dev"
   },
   "devDependencies": {
+    "babel-eslint": "^6.0.4",
+    "babel-preset-es2015": "^6.9.0",
     "browser-sync": "^2.11.1",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^3.1.0",
-    "gulp-coffee": "^2.3.1",
-    "gulp-coffeelint": "^0.6.0",
+    "gulp-babel": "^6.1.2",
     "gulp-concat": "^2.6.0",
     "gulp-cssnano": "^2.1.0",
+    "gulp-eslint": "^2.0.0",
     "gulp-gh-pages": "^0.5.4",
     "gulp-jade": "^1.1.0",
     "gulp-jadelint": "^0.1.0",
@@ -33,5 +35,8 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "license": "MIT",
-  "repository": "https://github.com/jh3y/gulp-boilerplate"
+  "repository": "https://github.com/jh3y/gulp-boilerplate",
+  "dependencies": {
+    "babel-polyfill": "^6.9.1"
+  }
 }
