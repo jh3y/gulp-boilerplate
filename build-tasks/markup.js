@@ -9,13 +9,13 @@ var gulp      = require('gulp'),
   /* markup:lint */
   lint = function() {
     return gulp.src(src.markup)
-      .pipe(plugins.jadelint());
+      .pipe(plugins.pugLint());
   },
   /* markup:compile */
   compile = function() {
     return gulp.src(src.docs)
       .pipe(plugins.plumber())
-      .pipe(env.deploy ? plugins.jade(): plugins.jade(opts.jade))
+      .pipe(env.deploy ? plugins.pug(): plugins.pug(opts.pug))
       .pipe(gulp.dest(dest.html));
   },
   /* markup:watch */
