@@ -17,7 +17,7 @@ module.exports = {
     gSize: {
       showFiles: true
     },
-    jade: {
+    pug: {
       pretty: true,
       data  : {
         name       : pkg.name,
@@ -49,8 +49,8 @@ module.exports = {
   paths: {
     base: env,
     sources: {
-      docs     : 'src/jade/*.jade',
-      markup   : 'src/jade/**/*.jade',
+      docs     : 'src/pug/*.pug',
+      markup   : 'src/pug/**/*.pug',
       overwatch: env + '**/*.{html,js,css}',
       scripts  : 'src/js/**/*.js',
       styles   : 'src/stylus/**/*.stylus'

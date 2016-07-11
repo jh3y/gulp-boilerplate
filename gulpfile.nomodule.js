@@ -89,12 +89,12 @@ gulp.task('styles:watch', function(event) {
 */
 gulp.task('markup:lint', function() {
   return gulp.src(src.markup)
-    .pipe(plugins.jadelint());
+    .pipe(plugins.pugLint());
 });
 gulp.task('markup:compile', function() {
   return gulp.src(src.docs)
     .pipe(plugins.plumber())
-    .pipe(isDeploy ? plugins.jade(): plugins.jade(opts.jade))
+    .pipe(isDeploy ? plugins.pug(): plugins.pug(opts.pug))
     .pipe(gulp.dest(dest.html));
 });
 gulp.task('markup:watch', function(event){
