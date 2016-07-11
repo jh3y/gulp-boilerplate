@@ -1,7 +1,7 @@
-var greet;
+'use strict';
 
-greet = function(msg) {
-  return console.log(msg);
+var msg = 'gulper';
+var greet = function greet(txt) {
+  return 'Hello ' + txt;
 };
-
-greet('Hello gulper!');
+greet(msg);

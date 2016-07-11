@@ -1,16 +1,13 @@
-(function() { var greet;
+(function() { 'use strict';
 
-greet = function(msg) {
-  return console.log(msg);
+var msg = 'gulper';
+var greet = function greet(txt) {
+  return 'Hello ' + txt;
 };
+greet(msg);
+"use strict";
 
-greet('Hello gulper!');
-
-var sum;
-
-sum = function(a, b) {
+var sum = function sum(a, b) {
   return a + b;
 };
-
-console.log(sum(1, 2));
- }());
+sum(1, 2); }());

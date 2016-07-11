@@ -1,7 +1,6 @@
-var sum;
+"use strict";
 
-sum = function(a, b) {
+var sum = function sum(a, b) {
   return a + b;
 };
-
-console.log(sum(1, 2));
+sum(1, 2);
