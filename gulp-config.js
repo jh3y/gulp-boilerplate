@@ -49,11 +49,11 @@ module.exports = {
   paths: {
     base: env,
     sources: {
-      docs     : 'src/pug/*.pug',
-      markup   : 'src/pug/**/*.pug',
+      docs     : 'src/markup/*.pug',
+      markup   : 'src/markup/**/*.pug',
       overwatch: env + '**/*.{html,js,css}',
-      scripts  : 'src/js/**/*.js',
-      styles   : 'src/stylus/**/*.styl'
+      scripts  : 'src/script/**/*.js',
+      styles   : 'src/style/**/*.styl'
     },
     destinations: {
       dist: './dist',
