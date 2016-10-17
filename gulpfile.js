@@ -17,9 +17,9 @@ gulp.task('serve', ['compile'], server.start);
   watch for changes to scriptsScript files then compile app JavaScript file
   from source, concatenating and uglifying content and publishing output based on env flag. For example, if we want sourcemaps we can output our individual JS files and the sourcemap for them to the desired directory by using the --map flag.
 */
-gulp.task('scripts:lint', scripts.lint);
-gulp.task('scripts:compile', ['scripts:lint'], scripts.compile);
-gulp.task('scripts:watch', scripts.watch);
+gulp.task('lint:scripts', scripts.lint);
+gulp.task('compile:scripts', ['lint:scripts'], scripts.compile);
+gulp.task('watch:scripts', scripts.watch);
 
 /*
   styles:compile/styles:watch
@@ -27,9 +27,9 @@ gulp.task('scripts:watch', scripts.watch);
   watch for changes to styles files then compile stylesheet from source
   auto prefixing content and generating output based on env flag.
 */
-gulp.task('styles:lint', styles.lint);
-gulp.task('styles:compile', ['styles:lint'], styles.compile);
-gulp.task('styles:watch', styles.watch);
+gulp.task('lint:styles', styles.lint);
+gulp.task('compile:styles', ['lint:styles'], styles.compile);
+gulp.task('watch:styles', styles.watch);
 
 /*
   markup:compile/markup:watch
@@ -37,22 +37,22 @@ gulp.task('styles:watch', styles.watch);
   watch for all markup file changes then compile
   page document files.
 */
-gulp.task('markup:lint', markup.lint);
-gulp.task('markup:compile', markup.compile);
-gulp.task('markup:watch', markup.watch);
+gulp.task('lint:markup', markup.lint);
+gulp.task('compile:markup', markup.compile);
+gulp.task('watch:markup', markup.watch);
 
 gulp.task('deploy', ['compile'], deploy.run);
 
 gulp.task('compile', [
-  'markup:compile',
-  'styles:compile',
-  'scripts:compile'
+  'compile:markup',
+  'compile:styles',
+  'compile:scripts'
 ]);
 
 gulp.task('watch', [
-  'markup:watch',
-  'styles:watch',
-  'scripts:watch'
+  'watch:markup',
+  'watch:styles',
+  'watch:scripts'
 ]);
 
 var defaultTasks = ((gutil.env.deploy) ? true: false) ? [
