@@ -6,11 +6,6 @@ var gulp      = require('gulp'),
   src         = gConfig.paths.sources,
   dest        = gConfig.paths.destinations,
   plugins     = require('gulp-load-plugins')(opts.load),
-  turnOffPrettyPrint = function() {
-    if (env.deploy && opts.pug.pretty) {
-      opts.pug.pretty = false;
-    }
-  },
   /* markup:lint */
   lint = function() {
     return gulp.src(src.markup)
@@ -18,6 +13,8 @@ var gulp      = require('gulp'),
   },
   /* markup:compile */
   compile = function() {
+    if (env.deploy && opts.pug.pretty) opts.pug.pretty = false;
+
     return gulp.src(src.docs)
       .pipe(plugins.plumber())
       .pipe(turnOffPrettyPrint())
