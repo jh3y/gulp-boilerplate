@@ -13,6 +13,7 @@ var gulp      = require('gulp'),
   },
   /* markup:compile */
   compile = function() {
+    if (env.deploy && opts.pug.pretty) opts.pug.pretty = false;
     return gulp.src(src.docs)
       .pipe(plugins.plumber())
       .pipe(env.deploy ? plugins.pug(): plugins.pug(opts.pug))
