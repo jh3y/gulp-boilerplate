@@ -17,7 +17,7 @@ var gulp      = require('gulp'),
 
     return gulp.src(src.docs)
       .pipe(plugins.plumber())
-      .pipe(opts.pug)
+      .pipe(plugins.pug(opts.pug))
       .pipe(gulp.dest(dest.html));
   },
   /* markup:watch */
