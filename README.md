@@ -55,15 +55,15 @@ You can see all available tasks with `gulp -T` but that's not particularly descr
 * `watch`: Watches all declared source files for changes and triggers compilation.
 * `compile`: Compiles sources.
 * `deploy`: Deploys build output to `gh-pages` branch on repo.
-* `scripts:lint`: Lints source script files.
-* `scripts:compile`: Compiles source script files.
-* `scripts:watch`: Watches source script files for changes and triggers compilation.
-* `styles:lint`: Lints source script files.
-* `styles:compile`: Compiles source script files.
-* `styles:watch`: Watches source script files for changes and triggers compilation.
-* `markup:lint`: Lints source script files.
-* `markup:compile`: Compiles source script files.
-* `markup:watch`: Watches source script files for changes and triggers compilation.
+* `lint:scripts`: Lints source script files.
+* `compile:scripts`: Compiles source script files.
+* `watch:scripts`: Watches source script files for changes and triggers compilation.
+* `lint:styles`: Lints source script files.
+* `compile:styles`: Compiles source script files.
+* `watch:styles`: Watches source script files for changes and triggers compilation.
+* `lint:markup`: Lints source script files.
+* `compile:markup`: Compiles source script files.
+* `watch:markup`: Watches source script files for changes and triggers compilation.
 
 ## License
 MIT
