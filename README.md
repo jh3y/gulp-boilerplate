@@ -68,7 +68,8 @@ You can see all available tasks with `gulp -T` but that's not particularly descr
 ## License
 MIT
 
-===
+---
+
 Any problems or questions, feel free to post an issue or tweet me, @_jh3y!
 
-@jh3y 2016 :smile:
+@jh3y 2017 :smile:
