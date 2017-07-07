@@ -1,6 +1,6 @@
 {
   "name": "gulp-boilerplate",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "a starting point for using gulp",
   "scripts": {
     "update:packages": "node wipeDeps.js && rm -rf node_modules && npm update --save-dev"

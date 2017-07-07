@@ -21,7 +21,7 @@ var gulp      = require('gulp'),
   },
   /* markup:watch */
   watch = function() {
-    gulp.watch(src.markup, ['markup:compile']);
+    gulp.watch(src.markup, ['compile:markup']);
   };
 
 module.exports = {
