@@ -1,5 +1,6 @@
 var gulp      = require('gulp'),
   gConfig     = require('../gulp-config'),
+  keys        = require('../gulp-keys'),
   utils       = require('./utils'),
   opts        = gConfig.pluginOpts,
   env         = utils.getEnv(),
@@ -28,7 +29,7 @@ var gulp      = require('gulp'),
   },
   /* styles:watch */
   watch = function() {
-    gulp.watch(src.styles, ['styles:compile']);
+    gulp.watch(src.styles, [keys.compile_styles]);
   };
 
 module.exports = {
