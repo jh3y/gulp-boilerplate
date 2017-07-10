@@ -1,5 +1,6 @@
 var gulp      = require('gulp'),
   gConfig     = require('./gulp-config'),
+  keys        = require('./gulp-keys'),
   browserSync = require('browser-sync'),
   opts        = gConfig.pluginOpts,
   plugins     = require('gulp-load-plugins')(opts.load),
@@ -14,7 +15,7 @@ var gulp      = require('gulp'),
 /*
   serve; creates local static livereload server using browser-sync.
 */
-gulp.task('serve', ['compile'], function(event) {
+gulp.task(keys.serve, [keys.compile], function(event) {
   browserSync(opts.browserSync);
   return gulp.watch(src.overwatch).on('change', function(file) {
     if (file.path.indexOf('.css') === -1) browserSync.reload();
@@ -27,12 +28,12 @@ gulp.task('serve', ['compile'], function(event) {
   watch for changes to scriptsScript files then compile app JavaScript file
   from source, concatenating and uglifying content and publishing output based on env flag. For example, if we want sourcemaps we can output our individual JS files and the sourcemap for them to the desired directory by using the --map flag.
 */
-gulp.task('scripts:lint', function() {
+gulp.task(keys.lint_scripts, function() {
   return gulp.src(src.scripts)
     .pipe(plugins.eslint())
     .pipe(plugins.eslint.format());
 });
-gulp.task('scripts:compile', ['scripts:lint'], function(event) {
+gulp.task(keys.compile_scripts, [keys.lint_scripts], function(event) {
   return gulp.src(src.scripts)
     .pipe(plugins.plumber())
     .pipe(plugins.babel(opts.babel))
@@ -48,8 +49,8 @@ gulp.task('scripts:compile', ['scripts:lint'], function(event) {
     .pipe(env.stat ? plugins.size(opts.gSize): plugins.gUtil.noop())
     .pipe(gulp.dest(env.dist ? dest.dist: dest.js));
 });
-gulp.task('scripts:watch', function(event) {
-  gulp.watch(src.scripts, ['scripts:compile']);
+gulp.task(keys.watch_scripts, function(event) {
+  gulp.watch(src.scripts, [keys.compile_scripts]);
 });
 
 /*
@@ -58,12 +59,12 @@ gulp.task('scripts:watch', function(event) {
   watch for changes to styles files then compile stylesheet from source
   auto prefixing content and generating output based on env flag.
 */
-gulp.task('styles:lint', function() {
+gulp.task(keys.lint_styles, function() {
   return gulp.src(src.styles)
     .pipe(plugins.stylint(opts.stylint))
     .pipe(plugins.stylint.reporter());
 });
-gulp.task('styles:compile', ['styles:lint'], function(event) {
+gulp.task(keys.compile_styles, [keys.lint_styles], function(event) {
   return gulp.src(src.styles)
     .pipe(plugins.plumber())
     .pipe(plugins.concat(gConfig.pkg.name + '.stylus'))
@@ -77,8 +78,8 @@ gulp.task('styles:compile', ['styles:lint'], function(event) {
     .pipe(gulp.dest(isDist ? dest.dist: dest.css))
     .pipe(browserSync.stream());
 });
-gulp.task('styles:watch', function(event) {
-  gulp.watch(src.styles, ['styles:compile']);
+gulp.task(keys.watch_styles, function(event) {
+  gulp.watch(src.styles, [keys.compile_styles]);
 });
 
 /*
@@ -87,43 +88,49 @@ gulp.task('styles:watch', function(event) {
   watch for all markup file changes then compile
   page document files.
 */
-gulp.task('markup:lint', function() {
+gulp.task(keys.lint_markup, function() {
   return gulp.src(src.markup)
     .pipe(plugins.pugLint());
 });
-gulp.task('markup:compile', function() {
+gulp.task(keys.compile_markup, [keys.lint_markup], function() {
   return gulp.src(src.docs)
     .pipe(plugins.plumber())
     .pipe(isDeploy ? plugins.pug(): plugins.pug(opts.pug))
     .pipe(gulp.dest(dest.html));
 });
-gulp.task('markup:watch', function(event){
-  gulp.watch(src.markup, ['markup:compile']);
+gulp.task(keys.watch_markup, function(event){
+  gulp.watch(src.markup, [keys.compile_markup]);
 });
 
-gulp.task('deploy', ['compile'], function(event) {
+gulp.task(keys.deploy, [keys.compile], function(event) {
   isDeploy = true;
   return gulp.src(src.overwatch)
     .pipe(plugins.deploy());
 });
 
-gulp.task('compile', [
-  'markup:compile',
-  'styles:compile',
-  'scripts:compile'
+gulp.task(keys.lint, [
+  keys.lint_markup,
+  keys.lint_styles,
+  keys.lint_scripts
 ]);
 
-gulp.task('watch', [
-  'markup:watch',
-  'styles:watch',
-  'scripts:watch'
+gulp.task(keys.compile, [
+  keys.compile_markup,
+  keys.compile_styles,
+  keys.compile_scripts
+]);
+
+gulp.task(keys.watch, [
+  keys.watch_markup,
+  keys.watch_styles,
+  keys.watch_scripts
 ]);
 
 var defaultTasks = isDeploy ? [
-  'deploy'
+  keys.deploy
 ]:[
-  'serve',
-  'watch'
+  keys.serve,
+  keys.watch
 ];
 
 gulp.task('default', defaultTasks);

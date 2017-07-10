@@ -23,21 +23,21 @@ For example;
 * You need `browserify` so you adjust your compilation task to make use of `browserify` bundling (this scenario is not as straightforward as normal `gulp` tasks and requires a slightly different set up to get the output from `browserify` as a readable stream for use by `gulp`).
 
 ## Usage
-as a prerequisite it's assumed you have `npm` installed and the `gulp-cli`.
+as a prerequisite it's assumed you have `npm/yarn` installed and the `gulp-cli`.
 
-1. clone the repo
+1. Clone the repo
 
         git clone https://github.com/jh3y/gulp-boilerplate.git
 
-2. install dependencies
+2. Install dependencies
 
-        npm install
+        npm install / yarn
 
-3. start gulp
+3. Start gulp
 
         gulp
 
-4. start hacking away with super fast livereload goodness.
+4. Start hacking away with super fast livereload goodness.
 
 ### babel-polyfill
 __NOTE::__ If you require the use of `babel` features that need polyfilling, you'll need to include the `babel-polyfill` script file with your JavaScript files. You could generate an `infrastructure/vendor` js file containing this and include within a `<script>` tag. The `babel-polyfill` is located at `node_modules/babel-polyfill/dist/polyfill.{min.}js`.
@@ -54,16 +54,17 @@ You can see all available tasks with `gulp -T` but that's not particularly descr
 * `serve`: Set up instance of `browsersync` watching `build` directory w/ live reload/reinjection enabled for rapid static site development.
 * `watch`: Watches all declared source files for changes and triggers compilation.
 * `compile`: Compiles sources.
+* `lint`: Lint sources.
 * `deploy`: Deploys build output to `gh-pages` branch on repo.
-* `lint:scripts`: Lints source script files.
-* `compile:scripts`: Compiles source script files.
-* `watch:scripts`: Watches source script files for changes and triggers compilation.
-* `lint:styles`: Lints source script files.
-* `compile:styles`: Compiles source script files.
-* `watch:styles`: Watches source script files for changes and triggers compilation.
-* `lint:markup`: Lints source script files.
-* `compile:markup`: Compiles source script files.
-* `watch:markup`: Watches source script files for changes and triggers compilation.
+* `lint_scripts`: Lints source script files.
+* `compile_scripts`: Compiles source script files.
+* `watch_scripts`: Watches source script files for changes and triggers compilation.
+* `lint_styles`: Lints source script files.
+* `compile_styles`: Compiles source script files.
+* `watch_styles`: Watches source script files for changes and triggers compilation.
+* `lint_markup`: Lints source script files.
+* `compile_markup`: Compiles source script files.
+* `watch_markup`: Watches source script files for changes and triggers compilation.
 
 ## License
 MIT

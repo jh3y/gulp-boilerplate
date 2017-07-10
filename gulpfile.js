@@ -1,5 +1,6 @@
 var gulp  = require('gulp'),
   gutil   = require('gulp-util'),
+  keys    = require('./gulp-keys'),
   server  = require('./build-tasks/server'),
   scripts = require('./build-tasks/scripts'),
   styles  = require('./build-tasks/styles'),
@@ -9,7 +10,7 @@ var gulp  = require('gulp'),
 /*
   serve; creates local static livereload server using browser-sync.
 */
-gulp.task('serve', ['compile'], server.start);
+gulp.task(keys.serve, [keys.compile], server.start);
 
 /*
   scripts:compile/scripts:watch
@@ -17,9 +18,9 @@ gulp.task('serve', ['compile'], server.start);
   watch for changes to scriptsScript files then compile app JavaScript file
   from source, concatenating and uglifying content and publishing output based on env flag. For example, if we want sourcemaps we can output our individual JS files and the sourcemap for them to the desired directory by using the --map flag.
 */
-gulp.task('lint:scripts', scripts.lint);
-gulp.task('compile:scripts', ['lint:scripts'], scripts.compile);
-gulp.task('watch:scripts', scripts.watch);
+gulp.task(keys.lint_scripts, scripts.lint);
+gulp.task(keys.compile_scripts, [keys.lint_scripts], scripts.compile);
+gulp.task(keys.watch_scripts, scripts.watch);
 
 /*
   styles:compile/styles:watch
@@ -27,9 +28,9 @@ gulp.task('watch:scripts', scripts.watch);
   watch for changes to styles files then compile stylesheet from source
   auto prefixing content and generating output based on env flag.
 */
-gulp.task('lint:styles', styles.lint);
-gulp.task('compile:styles', ['lint:styles'], styles.compile);
-gulp.task('watch:styles', styles.watch);
+gulp.task(keys.lint_styles, styles.lint);
+gulp.task(keys.compile_styles, [keys.lint_styles], styles.compile);
+gulp.task(keys.watch_styles, styles.watch);
 
 /*
   markup:compile/markup:watch
@@ -37,29 +38,35 @@ gulp.task('watch:styles', styles.watch);
   watch for all markup file changes then compile
   page document files.
 */
-gulp.task('lint:markup', markup.lint);
-gulp.task('compile:markup', markup.compile);
-gulp.task('watch:markup', markup.watch);
+gulp.task(keys.lint_markup, markup.lint);
+gulp.task(keys.compile_markup, [keys.lint_markup], markup.compile);
+gulp.task(keys.watch_markup, markup.watch);
 
-gulp.task('deploy', ['compile'], deploy.run);
+gulp.task(keys.deploy, [keys.compile], deploy.run);
 
-gulp.task('compile', [
-  'compile:markup',
-  'compile:styles',
-  'compile:scripts'
+gulp.task(keys.lint, [
+  keys.lint_markup,
+  keys.lint_styles,
+  keys.lint_scripts
 ]);
 
-gulp.task('watch', [
-  'watch:markup',
-  'watch:styles',
-  'watch:scripts'
+gulp.task(keys.compile, [
+  keys.compile_markup,
+  keys.compile_styles,
+  keys.compile_scripts
+]);
+
+gulp.task(keys.watch, [
+  keys.watch_markup,
+  keys.watch_styles,
+  keys.watch_scripts
 ]);
 
 var defaultTasks = ((gutil.env.deploy) ? true: false) ? [
-  'deploy'
+  keys.deploy
 ]:[
-  'serve',
-  'watch'
+  keys.serve,
+  keys.watch
 ];
 
 gulp.task('default', defaultTasks);
