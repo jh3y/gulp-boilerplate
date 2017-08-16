@@ -1,49 +1,57 @@
-var gulp  = require('gulp'),
-  gConfig  = require('../gulp-config'),
-  keys    = require('../gulp-keys'),
-  utils   = require('./utils'),
-  opts    = gConfig.pluginOpts,
-  env     = utils.getEnv(),
-  src     = gConfig.paths.sources,
-  dest    = gConfig.paths.destinations,
-  plugins = require('gulp-load-plugins')(opts.load);
+import gulp from 'gulp'
+import gConfig from '../gulp-config'
+import keys from '../gulp-keys'
+import { getEnv } from './utils'
+import pluginLoader from 'gulp-load-plugins'
 
-/* styles:lint */
-var lint = function() {
-  return gulp.src(src.styles)
+const opts = gConfig.pluginOpts
+const env = getEnv()
+const src = gConfig.paths.sources
+const dest = gConfig.paths.destinations
+const plugins = pluginLoader(opts.load)
+
+const lint = () =>
+  gulp
+    .src(src.styles.all)
     .pipe(plugins.stylint(opts.stylint))
     .pipe(plugins.stylint.reporter())
-}
+lint.description = `lint style source(${src.styles.all}) using stylint`
 
-/* styles:compile */
-var compile = function() {
-  return gulp.src(src.styles)
+const compile = () =>
+  gulp
+    .src(src.styles.root)
     .pipe(plugins.plumber())
-    .pipe(plugins.concat(gConfig.pkg.name + '.stylus'))
+    .pipe(plugins.concat(gConfig.pkg.name + '.styl'))
     .pipe(plugins.stylus())
     .pipe(plugins.prefix(opts.prefix))
-    .pipe(env.stat ? plugins.size(opts.gSize): plugins.gUtil.noop())
-    .pipe(env.deploy ? plugins.gUtil.noop(): gulp.dest(env.dist ? dest.dist: dest.css))
-    .pipe(plugins.minify())
-    .pipe(plugins.rename(opts.rename))
-    .pipe(env.stat ? plugins.size(opts.gSize): plugins.gUtil.noop())
-    .pipe(gulp.dest(env.dist ? dest.dist: dest.css))
-}
-compile.description = `concatenate and compile style source(${src.styles}) using stylus before autoprefixing and minifying`
+    .pipe(
+      env.deploy
+        ? plugins.gUtil.noop()
+        : gulp.dest(dest.css)
+    )
+    .pipe(env.deploy || env.dist ? plugins.minify() : plugins.gUtil.noop())
+    .pipe(
+      env.deploy || env.dist
+        ? plugins.rename(opts.rename)
+        : plugins.gUtil.noop()
+    )
+    .pipe(
+      env.deploy || env.dist
+        ? gulp.dest(dest.css)
+        : plugins.gUtil.noop()
+    )
+compile.description = `concatenate and compile style source(${src.styles.all}) using stylus before autoprefixing and minifying`
 compile.flags = {
-  '--stat': 'output sizing statistics for compilation output',
   '--deploy': `only create minified output in the deployment directory ${dest.css}`,
-  '--dist': `output both un-minified and minified styles to dist directory(${dest.dist})`,
+  '--dist': `output both un-minified and minified styles to dist directory`,
 }
 
-/* styles:watch */
-var watch = function() {
-  gulp.watch(src.styles, [keys.compile_styles])
-}
-watch.description = `watch for style source(${src.styles}) changes and compile on change`
+const watch = () =>
+  gulp.watch(src.styles.all, gulp.series(keys.lint_styles, keys.compile_styles))
+watch.description = `watch for style source(${src.styles.all}) changes and lint then compile on change`
 
-module.exports = {
-  lint   : lint,
-  compile: compile,
-  watch  : watch,
+export default {
+  compile,
+  lint,
+  watch,
 }

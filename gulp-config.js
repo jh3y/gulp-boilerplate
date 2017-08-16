@@ -1,65 +1,65 @@
-var env = 'public/',
-  pkg   = require('./package.json');
+import { getEnv } from './build-tasks/utils'
+
+const envVar = getEnv()
+const env = envVar.dist ? 'dist/' : 'public/'
+const pkg = require('./package.json')
+
 module.exports = {
   pkg: {
-    name: pkg.name
+    name: pkg.name,
   },
   pluginOpts: {
     browserSync: {
-      port   : 1987,
-      server : {
-        baseDir: env
-      }
-    },
-    babel: {
-      presets: [ 'es2015' ]
+      port: 1987,
+      server: {
+        baseDir: env,
+      },
     },
     gSize: {
-      showFiles: true
+      showFiles: true,
     },
     pug: {
       pretty: true,
-      data  : {
-        name       : pkg.name,
-        description: pkg.description
-      }
+      data: {
+        name: pkg.name,
+        description: pkg.description,
+      },
     },
     load: {
       rename: {
-        'gulp-gh-pages'    : 'deploy',
-        'gulp-util'        : 'gUtil',
-        'gulp-cssnano'     : 'minify',
-        'gulp-autoprefixer': 'prefix'
-      }
+        'gulp-gh-pages': 'deploy',
+        'gulp-util': 'gUtil',
+        'gulp-cssnano': 'minify',
+        'gulp-autoprefixer': 'prefix',
+      },
     },
-    prefix: [
-      'last 3 versions',
-      'Blackberry 10',
-      'Android 3',
-      'Android 4'
-    ],
+    prefix: ['last 3 versions', 'Blackberry 10', 'Android 3', 'Android 4'],
     rename: {
-      suffix: '.min'
+      suffix: '.min',
     },
     stylint: {
-      reporter: 'stylint-stylish'
+      reporter: 'stylint-stylish',
     },
-    wrap: '(function() { <%= contents %> }());'
   },
   paths: {
     base: env,
     sources: {
-      docs     : 'src/markup/*.pug',
-      markup   : 'src/markup/**/*.pug',
+      docs: 'src/markup/*.pug',
+      markup: 'src/markup/**/*.pug',
       overwatch: env + '**/*.{html,js,css}',
-      scripts  : 'src/script/**/*.js',
-      styles   : 'src/style/**/*.styl'
+      scripts: {
+        root: 'src/script/index.js',
+        all: 'src/script/**/*.js',
+      },
+      styles: {
+        root: 'src/style/style.styl',
+        all: 'src/style/**/*.styl',
+      }
     },
     destinations: {
-      dist: './dist',
-      css : env + 'css/',
+      css: env + 'css/',
       html: env,
-      js  : env + 'js/'
-    }
-  }
-};
+      js: env + 'js/',
+    },
+  },
+}

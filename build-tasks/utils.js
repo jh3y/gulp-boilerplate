@@ -1,18 +1,20 @@
-var getEnv = function() {
-  var gutil = require('gulp-util'),
-    activeEnvs = {},
-    envs = [
-      'dist',
-      'dev',
-      'deploy',
-      'mapped',
-      'stat'
-    ];
-  for (var i = 0; i < envs.length; i++) {
-    activeEnvs[envs[i]] = (gutil.env[envs[i]]) ? true: false;
+import gutil from 'gulp-util'
+
+const getEnv = () => {
+  const activeEnvs = {}
+  const envs = [
+    'dist',
+    'dev',
+    'deploy',
+    'mapped',
+    'stat',
+  ]
+  for (let i = 0; i < envs.length; i++) {
+    activeEnvs[envs[i]] = gutil.env[envs[i]]
   }
-  return activeEnvs;
-};
-module.exports = {
-  getEnv: getEnv
-};
+  return activeEnvs
+}
+
+export {
+  getEnv,
+}
