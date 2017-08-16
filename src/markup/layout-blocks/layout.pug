@@ -5,9 +5,14 @@ html(lang="en-us")
     title= name
     meta(name="viewport", content="width=device-width, initial-scale=1, user-scalable=0, maximum-scale=1.0")
     meta(name="description", content= description)
-    link(rel="stylesheet", href=`css/${name}.css`)
+    link(rel="stylesheet", href=`css/${styleName}.css`)
   body.bg--lilac.tx--white.tx--center
     include header
     block content
     include footer
-    script(src=`js/${name}.js`)
+    script(src=`js/${scriptName}.js`)
+    script.
+      (function(){
+        const sum = myScripts.sum(1, 2)
+        console.info('The sum of 1 and 2 is:', sum)
+      })()

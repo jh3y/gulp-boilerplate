@@ -1,54 +1,75 @@
-var gulp  = require('gulp'),
-  gConfig  = require('../gulp-config'),
-  keys    = require('../gulp-keys'),
-  utils   = require('./utils'),
-  opts    = gConfig.pluginOpts,
-  env     = utils.getEnv(),
-  src     = gConfig.paths.sources,
-  dest    = gConfig.paths.destinations,
-  plugins = require('gulp-load-plugins')(opts.load);
+import gulp from 'gulp'
+import gConfig from '../gulp-config'
+import keys from '../gulp-keys'
+import { getEnv } from './utils'
+import { rollup } from 'rollup'
+import babel from 'rollup-plugin-babel'
+import resolve from 'rollup-plugin-node-resolve'
+import uglify from 'rollup-plugin-uglify'
+import pluginLoader from 'gulp-load-plugins'
 
-/* scripts:lint */
-var lint = function() {
-  return gulp.src(src.scripts)
+const opts = gConfig.pluginOpts
+const env = getEnv()
+const src = gConfig.paths.sources
+const dest = gConfig.paths.destinations
+const plugins = pluginLoader(opts.load)
+
+const lint = () => {
+  return gulp
+    .src(src.scripts.all)
     .pipe(plugins.eslint())
     .pipe(plugins.eslint.format())
 }
-lint.description = `lint script source(${src.scripts}) using eslint`
+lint.description = `lint script source(${src.scripts.all}) using eslint`
 
-/* scripts:compile */
-var compile = function() {
-  return gulp.src(src.scripts)
-    .pipe(plugins.plumber())
-    .pipe(plugins.babel(opts.babel))
-    .pipe(env.mapped ? gulp.dest(dest.js): plugins.gUtil.noop())
-    .pipe(env.mapped ? plugins.sourcemaps.init(): plugins.gUtil.noop())
-    .pipe(plugins.concat(gConfig.pkg.name + '.js'))
-    .pipe(plugins.wrap(opts.wrap))
-    .pipe(env.stat ? plugins.size(opts.gSize): plugins.gUtil.noop())
-    .pipe(env.deploy ? plugins.gUtil.noop(): gulp.dest(env.dist ? dest.dist: dest.js))
-    .pipe(plugins.uglify())
-    .pipe(plugins.rename(opts.rename))
-    .pipe(env.mapped ? plugins.sourcemaps.write('./'): plugins.gUtil.noop())
-    .pipe(env.stat ? plugins.size(opts.gSize): plugins.gUtil.noop())
-    .pipe(gulp.dest(env.dist ? dest.dist: dest.js))
+const compile = async function() {
+
+  const plugins = [
+    resolve(),
+    babel({ exclude: 'node_modules/**' }),
+  ]
+
+  if (env.mapped || env.deploy) plugins.push(uglify())
+
+  const bundle = await rollup({
+    input: src.scripts.root,
+    plugins,
+  })
+
+  await bundle.write({
+    file: `${dest.js}/${gConfig.pkg.name}${env.deploy ? '.min' : ''}.js`,
+    format: 'iife',
+    name: 'myScripts',
+    sourcemap: env.mapped,
+  })
+
+  if (env.dist) {
+    plugins.push(uglify())
+    const bundle = await rollup({
+      input: src.scripts.root,
+      plugins,
+    })
+    await bundle.write({
+      file: `${dest.js}${gConfig.pkg.name}.min.js`,
+      format: 'iife',
+      name: 'myScripts',
+      sourcemap: true,
+    })
+  }
 }
-compile.description = `compile script source(${src.scripts}) using babel before concatenating and safety wrapping output`
+compile.description = `compile script source(${src.scripts.all}) using babel before concatenating and safety wrapping output`
 compile.flags = {
   '--mapped': 'create source maps for scripts',
-  '--stat': 'output script size statistics for output',
   '--deploy': `minify scripts output for deployment from ${dest.js}`,
-  '--dist': `produce both un-minified and minified output for ${dest.dist} folder`,
+  '--dist': `output both un-minified and minified scripts along with sourcemaps to dist directory`,
 }
 
-/* scripts:watch */
-var watch = function() {
-  gulp.watch(src.scripts, [keys.compile_scripts])
-}
-watch.description = `watch for script source(${src.scripts}) changes and compile on change`
+const watch = () =>
+  gulp.watch(src.scripts.all, gulp.series(keys.lint_scripts, keys.compile_scripts))
+watch.description = `watch for script source(${src.scripts.all}) changes and lint then compile on change`
 
 module.exports = {
-  lint   : lint,
-  compile: compile,
-  watch  : watch,
+  compile,
+  lint,
+  watch,
 }

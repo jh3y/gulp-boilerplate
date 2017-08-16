@@ -1,31 +1,35 @@
-var gulp      = require('gulp'),
-  browsersync = require('browser-sync'),
-  vss         = require('vinyl-source-stream'),
-  vb          = require('vinyl-buffer'),
-  vf          = require('vinyl-file'),
-  gConfig      = require('../gulp-config'),
-  opts        = gConfig.pluginOpts,
-  src         = gConfig.paths.sources,
-  dest        = gConfig.paths.destinations;
+import gulp from 'gulp'
+import keys from '../gulp-keys'
+import browsersync from 'browser-sync'
+import vss from 'vinyl-source-stream'
+import vb from 'vinyl-buffer'
+import vf from 'vinyl-file'
+import gConfig from '../gulp-config'
+
+const opts = gConfig.pluginOpts
+const src = gConfig.paths.sources
+const dest = gConfig.paths.destinations
 
 /**
   * creates local static livereload server using browsersync
 */
-var start = function() {
-  var server = browsersync.create();
-  server.init(opts.browserSync);
-  return server.watch(src.overwatch, function(evt, file) {
-    if (evt === 'change' && file.indexOf('.css') === -1)
-      server.reload();
+const startServer = () => {
+  const server = browsersync.create()
+  server.init(opts.browserSync)
+  return server.watch(src.overwatch, (evt, file) => {
+    if (evt === 'change' && file.indexOf('.css') === -1) server.reload()
     if (evt === 'change' && file.indexOf('.css') !== -1)
-      vf.readSync(file)
+      vf
+        .readSync(file)
         .pipe(vss(file))
         .pipe(vb())
         .pipe(server.stream())
   })
 }
-start.description = `creates a Browsersync instance that serves content from ${opts.browserSync.server.baseDir} providing live reload and style injection`
+const start = (cb) => gulp.series(keys.compile, startServer)(cb)
+start.description = `creates a Browsersync instance that serves content from ${opts
+  .browserSync.server.baseDir} providing live reload and style injection`
 
 module.exports = {
-  start: start,
+  start,
 }
