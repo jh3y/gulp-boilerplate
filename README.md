@@ -49,22 +49,7 @@ You could have a `gulpfile` with all your tasks in one file. But, if your task l
 Tasks live under the `build-tasks` folder in relevant modules. For example, script related functions live within `scripts.js`. Each module exports aptly named functions such as `compile`, `lint` and `watch`. These are invoked from the `gulpfile`. For those that just want everything in one file, refer to `gulpfile.nomodule.js`.
 
 ## Tasks
-You can see all available tasks with `gulp -T` but that's not particularly descriptive depending on the verbosity of the task name.
-
-* `serve`: Set up instance of `browsersync` watching `build` directory w/ live reload/reinjection enabled for rapid static site development.
-* `watch`: Watches all declared source files for changes and triggers compilation.
-* `compile`: Compiles sources.
-* `lint`: Lint sources.
-* `deploy`: Deploys build output to `gh-pages` branch on repo.
-* `lint_scripts`: Lints source script files.
-* `compile_scripts`: Compiles source script files.
-* `watch_scripts`: Watches source script files for changes and triggers compilation.
-* `lint_styles`: Lints source script files.
-* `compile_styles`: Compiles source script files.
-* `watch_styles`: Watches source script files for changes and triggers compilation.
-* `lint_markup`: Lints source script files.
-* `compile_markup`: Compiles source script files.
-* `watch_markup`: Watches source script files for changes and triggers compilation.
+You can see all available tasks with `gulp -T`. This will print out a list of available tasks and their respective metadata.
 
 ## License
 MIT
