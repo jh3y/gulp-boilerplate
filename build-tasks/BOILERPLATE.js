@@ -28,7 +28,7 @@ watch.description = ``
 /* TODO: watch flags */
 watch.flags = {}
 
-module.exports = {
+export {
   lint,
   compile,
   watch,
