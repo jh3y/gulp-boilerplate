@@ -21,8 +21,9 @@ module.exports = {
     pug: {
       pretty: true,
       data: {
-        name: pkg.name,
         description: pkg.description,
+        name: pkg.name,
+        version: pkg.version,
       },
     },
     load: {

@@ -1,6 +1,6 @@
 {
   "name": "gulp-boilerplate",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "description": "a starting point for using gulp",
   "scripts": {
     "precommit": "yarn prettier-fix",
