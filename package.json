@@ -1,6 +1,6 @@
 {
   "name": "gulp-boilerplate",
-  "version": "4.1.1",
+  "version": "4.1.2",
   "description": "a starting point for using gulp",
   "scripts": {
     "precommit": "yarn prettier-fix",
@@ -12,8 +12,6 @@
     "babel-eslint": "^6.1.2",
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-preset-env": "^1.6.1",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-latest": "^6.24.1",
     "browser-sync": "^2.13.0",
     "eslint-plugin-prettier": "^2.3.1",
     "gulp": "gulpjs/gulp#4.0",
@@ -33,7 +31,6 @@
     "gulp-stylus": "^2.5.0",
     "gulp-util": "^3.0.7",
     "husky": "^0.14.3",
-    "key-mirror": "^1.0.1",
     "prettier": "^1.8.2",
     "rollup": "^0.51.3",
     "rollup-plugin-babel": "^3.0.2",
