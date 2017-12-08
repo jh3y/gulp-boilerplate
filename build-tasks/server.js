@@ -1,10 +1,10 @@
 import gulp from 'gulp'
-import keys from '../gulp-keys'
 import browsersync from 'browser-sync'
 import vss from 'vinyl-source-stream'
 import vb from 'vinyl-buffer'
 import vf from 'vinyl-file'
 import gConfig from '../gulp-config'
+import { compile as compileAllSource } from './main'
 
 const opts = gConfig.pluginOpts
 const src = gConfig.paths.sources
@@ -26,10 +26,9 @@ const startServer = () => {
         .pipe(server.stream())
   })
 }
-const start = (cb) => gulp.series(keys.compile, startServer)(cb)
-start.description = `creates a Browsersync instance that serves content from ${opts
+const compile = (cb) => compileAllSource(cb)
+const serve = gulp.series(compile, startServer)
+serve.description = `creates a Browsersync instance that serves content from ${opts
   .browserSync.server.baseDir} providing live reload and style injection`
 
-module.exports = {
-  start,
-}
+export { serve }
