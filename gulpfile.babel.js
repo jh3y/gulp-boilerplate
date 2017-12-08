@@ -32,6 +32,7 @@ export {
   watchMarkup,
 }
 
+// NOTE:: wrapper functions necessary to get metadata for tasks as intended
 const serve = (cb) => serveEverything(cb)
 const watch = (cb) => watchEverything(cb)
 const defaultTasks = gutil.env.deploy
