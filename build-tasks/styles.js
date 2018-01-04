@@ -2,13 +2,13 @@ import gulp from 'gulp'
 import gConfig from '../gulp-config'
 import { getEnv } from './utils'
 import pluginLoader from 'gulp-load-plugins'
+import { obj as noop } from 'through2'
 
 const opts = gConfig.pluginOpts
 const env = getEnv()
 const src = gConfig.paths.sources
 const dest = gConfig.paths.destinations
 const plugins = pluginLoader(opts.load)
-
 const lintStyles = () =>
   gulp
     .src(src.styles.all)
@@ -25,19 +25,19 @@ const compileStyles = () =>
     .pipe(plugins.prefix(opts.prefix))
     .pipe(
       env.deploy
-        ? plugins.gUtil.noop()
+        ? noop()
         : gulp.dest(dest.css)
     )
-    .pipe(env.deploy || env.dist ? plugins.minify() : plugins.gUtil.noop())
+    .pipe(env.deploy || env.dist ? plugins.minify() : noop())
     .pipe(
       env.deploy || env.dist
         ? plugins.rename(opts.rename)
-        : plugins.gUtil.noop()
+        : noop()
     )
     .pipe(
       env.deploy || env.dist
         ? gulp.dest(dest.css)
-        : plugins.gUtil.noop()
+        : noop()
     )
 compileStyles.description = `concatenate and compile style source(${src.styles.all}) using stylus before autoprefixing and minifying`
 compileStyles.flags = {
