@@ -2,6 +2,7 @@ import gulp from 'gulp'
 import gConfig from '../gulp-config'
 import { getEnv } from './utils'
 import pluginLoader from 'gulp-load-plugins'
+import { obj as noop } from 'through2'
 
 const opts = gConfig.pluginOpts
 const env = getEnv()
@@ -21,7 +22,7 @@ const compileMarkup = () => {
     })
   })
   // Don't do anything if outputting dist files and using compilation task
-  if (env.dist) return gulp.src(src.docs).pipe(plugins.gUtil.noop())
+  if (env.dist) return gulp.src(src.docs).pipe(noop())
   return gulp
     .src(src.docs)
     .pipe(plugins.plumber())

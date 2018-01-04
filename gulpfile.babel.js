@@ -1,5 +1,5 @@
 import gulp from 'gulp'
-import gutil from 'gulp-util'
+import { getEnv } from './build-tasks/utils'
 
 import {
   compileScripts,
@@ -31,11 +31,11 @@ export {
   watchStyles,
   watchMarkup,
 }
-
+const env = getEnv()
 // NOTE:: wrapper functions necessary to get metadata for tasks as intended
 const serve = (cb) => serveEverything(cb)
 const watch = (cb) => watchEverything(cb)
-const defaultTasks = gutil.env.deploy
+const defaultTasks = env.deploy
   ? gulp.series(deploy)
   : gulp.parallel(
       serve,

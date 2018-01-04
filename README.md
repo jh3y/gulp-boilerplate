@@ -59,4 +59,4 @@ MIT
 
 Any problems or questions, feel free to post an issue or tweet me, @_jh3y!
 
-@jh3y 2017 :smile:
+@jh3y 2018 :smile:
