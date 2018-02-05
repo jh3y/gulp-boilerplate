@@ -1,6 +1,6 @@
 {
   "name": "gulp-boilerplate",
-  "version": "4.1.3",
+  "version": "4.1.4",
   "description": "a starting point for using gulp",
   "scripts": {
     "precommit": "yarn prettier-fix",
@@ -9,12 +9,13 @@
   },
   "devDependencies": {
     "babel": "^6.23.0",
+    "babel-core": "^6.26.0",
     "babel-eslint": "^8.1.2",
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-preset-env": "^1.6.1",
     "browser-sync": "^2.13.0",
     "eslint-plugin-prettier": "^2.3.1",
-    "gulp": "gulpjs/gulp#4.0",
+    "gulp": "^4.0.0",
     "gulp-autoprefixer": "^4.1.0",
     "gulp-babel": "^7.0.0",
     "gulp-concat": "^2.6.1",
@@ -38,11 +39,10 @@
     "rollup-plugin-uglify": "^2.0.1",
     "stylint": "^1.5.6",
     "stylint-stylish": "^1.3.2",
+    "through2": "^2.0.3",
     "vinyl": "^2.1.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-file": "^2.0.0",
-    "babel-core": "^6.26.0",
-    "through2": "^2.0.3",
     "vinyl-source-stream": "^1.1.0"
   },
   "license": "MIT",
