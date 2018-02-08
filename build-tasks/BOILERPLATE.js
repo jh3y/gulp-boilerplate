@@ -1,4 +1,4 @@
-import gulp from'gulp'
+import gulp from 'gulp'
 import gConfig from '../gulp-config'
 import { getEnv } from './utils'
 import pluginLoader from 'gulp-load-plugins'
