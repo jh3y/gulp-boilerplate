@@ -1,11 +1,11 @@
 {
   "name": "gulp-boilerplate",
-  "version": "4.1.4",
+  "version": "4.1.5",
   "description": "a starting point for using gulp",
   "scripts": {
     "precommit": "yarn prettier-fix",
     "prettier-fix": "yarn prettier --write",
-    "prettier": "prettier --single-quote --trailing-comma es5 --parser flow --no-semi --jsx-bracket-same-line true --print-width 80 \"src/script/**/*.js\""
+    "prettier": "prettier \"src/script/**/*.js\""
   },
   "devDependencies": {
     "babel": "^6.23.0",
@@ -13,7 +13,8 @@
     "babel-eslint": "^8.1.2",
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-preset-env": "^1.6.1",
-    "browser-sync": "^2.13.0",
+    "browser-sync": "^2.24.5",
+    "debug": "3.1.0",
     "eslint-plugin-prettier": "^2.3.1",
     "gulp": "^4.0.0",
     "gulp-autoprefixer": "^4.1.0",
@@ -25,7 +26,6 @@
     "gulp-load-plugins": "^1.5.0",
     "gulp-plumber": "^1.1.0",
     "gulp-pug": "3.3.0",
-    "gulp-pug-lint": "^0.1.6",
     "gulp-rename": "^1.2.2",
     "gulp-size": "^3.0.0",
     "gulp-stylint": "^4.0.0",
