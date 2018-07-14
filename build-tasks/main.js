@@ -14,11 +14,10 @@ import {
 
 import {
   compileMarkup,
-  lintMarkup,
   watchMarkup,
 } from './markup'
 
-const lint = gulp.parallel(lintMarkup, lintStyles, lintScripts)
+const lint = gulp.parallel(lintStyles, lintScripts)
 lint.description = 'lint all source'
 
 const compile = gulp.parallel(compileMarkup, compileStyles, compileScripts)

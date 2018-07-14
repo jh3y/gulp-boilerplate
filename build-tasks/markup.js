@@ -10,9 +10,6 @@ const src = gConfig.paths.sources
 const dest = gConfig.paths.destinations
 const plugins = pluginLoader(opts.load)
 
-const lintMarkup = () => gulp.src(src.markup).pipe(plugins.pugLint())
-lintMarkup.description = `lint markup source(${src.markup}) using pug-lint`
-
 const compileMarkup = () => {
   opts.pug = Object.assign({}, opts.pug, {
     pretty: !(env.deploy && opts.pug.pretty),
@@ -35,11 +32,10 @@ compileMarkup.flags = {
     'Turns off pretty option in pug and removes whitespace from output',
 }
 
-const watchMarkup = () => gulp.watch(src.markup, gulp.series(lintMarkup, compileMarkup))
-watchMarkup.description = `watch for changes in markup source(${src.markup}) and lint then compile on change`
+const watchMarkup = () => gulp.watch(src.markup, gulp.series(compileMarkup))
+watchMarkup.description = `watch for changes in markup source(${src.markup}) compile on change`
 
 export {
   compileMarkup,
-  lintMarkup,
   watchMarkup,
 }

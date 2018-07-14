@@ -7,7 +7,7 @@ import {
   watchScripts,
 } from './build-tasks/scripts'
 import { compileStyles, lintStyles, watchStyles } from './build-tasks/styles'
-import { compileMarkup, lintMarkup, watchMarkup } from './build-tasks/markup'
+import { compileMarkup, watchMarkup } from './build-tasks/markup'
 
 import { compile, lint, watch as watchEverything } from './build-tasks/main'
 import { deploy } from './build-tasks/deploy'
@@ -26,7 +26,6 @@ export {
   compileStyles,
   lintScripts,
   lintStyles,
-  lintMarkup,
   watchScripts,
   watchStyles,
   watchMarkup,
